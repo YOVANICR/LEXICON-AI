@@ -1,0 +1,13 @@
+
+{
+  "library_title": "Library",
+  "add_document_button": "Add",
+  "document_title_placeholder": "Document title...",
+  "document_text_placeholder": "Paste your text here...",
+  "reader_no_document_selected": "Select a document from your library to start reading.",
+  "lexicon_title": "My Lexicon",
+  "work_in_progress_title": "🚧 Feature Under Construction 🚧",
+  "work_in_progress_message": "We are working hard to bring this feature to you as soon as possible. Thank you for your patience!",
+  "navigate_to_reader": "Back to Reader",
+  "navigate_to_profile": "Go to my Profile"
+}

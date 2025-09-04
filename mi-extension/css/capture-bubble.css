@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Archivo: extension/css/capture-bubble.css
+   Propósito: Estilos para la burbuja de captura de vocabulario personalizada.
+   ========================================================================== */
+
+/* Contenedor principal de la burbuja */
+.li-capture-bubble {
+  position: fixed; /* Fijo en la pantalla para que el scroll no lo afecte */
+  z-index: 2147483647; /* El z-index más alto posible para estar sobre todo */
+  background: white;
+  border: 1px solid #eaeef2;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  padding: 14px;
+  width: 340px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #1f2328;
+  line-height: 1.5;
+  display: none; /* Oculto por defecto */
+}
+
+/* Título que muestra la palabra seleccionada */
+.li-capture-bubble__title {
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 16px;
+  word-wrap: break-word; /* Para que frases largas no rompan el layout */
+}
+
+.li-capture-bubble__title strong {
+  color: #0969da; /* Azul para resaltar la palabra */
+}
+
+/* Contenedor para los botones de acción */
+.li-capture-bubble__actions {
+  display: flex;
+  flex-wrap: wrap; /* Para que se ajuste en pantallas pequeñas */
+  gap: 8px;
+}
+
+/* Estilo base de los botones */
+.li-capture-bubble__btn {
+  border: 1px solid #d0d7de;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #f6f8fa;
+  color: #1f2328;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.li-capture-bubble__btn:hover {
+  border-color: #a3aab3;
+}
+
+/* Colores específicos para cada estado */
+.li-capture-bubble__btn--unknown {
+  background-color: #d73a49;
+  color: white;
+  border-color: transparent;
+}
+.li-capture-bubble__btn--learning {
+  background-color: #d29922;
+  color: white;
+  border-color: transparent;
+}
+.li-capture-bubble__btn--known {
+  background-color: #2da44e;
+  color: white;
+  border-color: transparent;
+}
+.li-capture-bubble__btn--none {
+  color: #57606a;
+}

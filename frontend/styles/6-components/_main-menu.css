@@ -1,0 +1,30 @@
+/*
+  Archivo: frontend/styles/6-components/_main-menu.css
+  Propósito: Estilos para el menú de navegación principal (c-main-menu) ubicado
+             en la cabecera de la aplicación.
+*/
+
+.c-main-menu {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.c-main-menu__btn {
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.c-main-menu__icon {
+  width: 26px;
+  height: 26px;
+}

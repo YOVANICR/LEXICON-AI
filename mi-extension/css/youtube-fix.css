@@ -1,0 +1,14 @@
+/* ==========================================================================
+   Archivo: css/youtube-fix.css
+   Propósito: Anular el estilo de YouTube que impide la selección de texto
+              en los subtítulos, pero solo para nuestras palabras resaltadas.
+   ========================================================================== */
+
+.ytp-caption-segment .li-highlight {
+  /*
+    Esta es la regla clave. Le dice al navegador que, aunque el contenedor
+    de subtítulos ignore los clics, nuestras palabras resaltadas SÍ deben
+    reaccionar al ratón, permitiendo la selección y el clic derecho.
+  */
+  pointer-events: auto !important;
+}

@@ -1,0 +1,13 @@
+
+{
+  "library_title": "Biblioteca",
+  "add_document_button": "Agregar",
+  "document_title_placeholder": "Título del documento...",
+  "document_text_placeholder": "Pega aquí tu texto...",
+  "reader_no_document_selected": "Selecciona un documento de tu biblioteca para empezar a leer.",
+  "lexicon_title": "Mi Léxico",
+  "work_in_progress_title": "🚧 Funcionalidad en Construcción 🚧",
+  "work_in_progress_message": "Estamos trabajando arduamente para traer esta funcionalidad lo antes posible. ¡Gracias por tu paciencia!",
+  "navigate_to_reader": "Volver al Lector",
+  "navigate_to_profile": "Ir a mi Perfil"
+}

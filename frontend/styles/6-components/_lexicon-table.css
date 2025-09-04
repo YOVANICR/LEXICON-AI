@@ -1,0 +1,34 @@
+/*
+  Archivo: frontend/styles/6-components/_lexicon-table.css
+  Propósito: Define los estilos para la tabla de léxico y su barra de herramientas,
+             asegurando que sea legible y funcional.
+*/
+
+.c-lexicon-toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.c-lexicon-table-wrapper {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 60vh;
+  overflow-x: auto; /* Permite scroll horizontal si es necesario en móvil */
+}
+
+.c-lexicon-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.c-lexicon-table__header {
+  background: #f3f6fc;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

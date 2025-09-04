@@ -1,0 +1,13 @@
+/*
+  Archivo: frontend/styles/5-objects/_panel.css
+  Propósito: Define el estilo de un objeto "panel" reutilizable. Es un contenedor genérico
+             con fondo, borde y sombra, usado en toda la aplicación.
+*/
+
+.c-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgba(0,0,0,.04);
+  padding: 14px;
+}

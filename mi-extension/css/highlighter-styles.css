@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Archivo: extension/css/highlighter-styles.css
+   Propósito: Estilos tipo resaltador (no subrayado).
+   ========================================================================== */
+
+.li-highlight {
+  padding: 1px 2px;
+  border-radius: 2px;
+  color: inherit;
+  font-weight: inherit;
+}
+
+/* 'none' ya no se envuelve; si apareciera, que no pinte */
+.li-highlight--status-none {
+  background-color: transparent;
+}
+
+/* no aprendida */
+.li-highlight--status-unknown {
+  background-color: rgba(255, 99, 132, 0.35);
+}
+
+/* en proceso */
+.li-highlight--status-learning {
+  background-color: rgba(255, 235, 59, 0.5);
+}
+
+/* aprendida */
+.li-highlight--status-known {
+  background-color: rgba(76, 175, 80, 0.35);
+}

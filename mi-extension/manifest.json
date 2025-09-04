@@ -1,0 +1,80 @@
+{
+  "manifest_version": 3,
+  "name": "Lector Inmersivo - Tu Plataforma",
+  "version": "1.3.0",
+  "description": "Repasa vocabulario, captura frases y resalta palabras en la web.",
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab",
+    "tabs",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://localhost:3333/*",
+    "https://*.youtube.com/*",
+    "https://*.netflix.com/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["content-video.js", "content-highlighter.js", "selection-capture.js"],
+      "css": [
+        "css/highlighter-styles.css",
+        "css/capture-bubble.css",
+        "css/youtube-fix.css" 
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*.netflix.com/*"],
+      "js": ["content-video.js", "selection-capture.js"],
+      "css": ["css/capture-bubble.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://*.youtube.com/*",
+        "https://*.netflix.com/*",
+        "http://localhost:3333/*"
+      ],
+      "js": ["content-highlighter.js", "selection-capture.js"],
+      "css": [
+        "css/highlighter-styles.css",
+        "css/capture-bubble.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Importar Artículo",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "capture-phrase": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Captura la frase del subtítulo actual"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/Readability.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

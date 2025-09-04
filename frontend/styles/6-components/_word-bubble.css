@@ -1,0 +1,41 @@
+/*
+  Archivo: frontend/styles/6-components/_word-bubble.css
+  Propósito: Estilos para el componente de la burbuja de información (c-word-bubble),
+             que es un elemento flotante complejo.
+*/
+
+.c-word-bubble {
+  position: fixed;
+  z-index: 9999;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  width: 380px;
+  max-width: 95vw; /* Asegura que no se salga de la pantalla en móviles */
+  display: none;
+  flex-direction: row;
+}
+
+.c-word-bubble__main-content {
+  padding: 12px;
+  flex-grow: 1;
+}
+
+.c-word-bubble__title {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.c-word-bubble__definition {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.c-word-bubble__actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}

@@ -1,0 +1,32 @@
+/*
+  Archivo: frontend/styles/4-elements/_html-and-body.css
+  Propósito: Define los estilos base para las etiquetas raíz del documento, como la tipografía,
+             el color de fondo y el comportamiento del tema oscuro/claro.
+*/
+
+body {
+  padding: 20px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+h2 {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+/* ====== MODO OSCURO ====== */
+body.dark {
+  --bg: #000000;
+  --card: #111111;
+  --ink: #e5e5e5;
+  --muted: #aaaaaa;
+  --line: #333333;
+}

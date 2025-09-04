@@ -1,0 +1,49 @@
+/*
+  Archivo: frontend/styles/5-objects/_layout.css
+  Propósito: Define las clases de maquetación principal (layout objects) que estructuran la aplicación,
+             siguiendo un enfoque Mobile First.
+*/
+
+.l-main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+
+.l-app {
+  display: flex;
+  flex-direction: column; /* MOBILE FIRST: Por defecto, los paneles se apilan */
+  gap: 20px;
+}
+
+.l-app__panel {
+  width: 100%; /* En móvil, los paneles ocupan todo el ancho */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.l-app__main {
+  flex-shrink: 0; /* Evita que el panel principal se encoja */
+}
+
+/* Cuando la pantalla sea suficientemente grande... */
+@media (min-width: var(--breakpoint-lg)) {
+  .l-app {
+    flex-direction: row; /* ...cambiamos a un layout de fila */
+  }
+
+  .l-app__panel--left {
+    width: 300px;
+  }
+
+  .l-app__panel--right {
+    width: 280px;
+  }
+
+  .l-app__main {
+    flex: 1; /* El panel principal ahora puede crecer para ocupar el espacio */
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}

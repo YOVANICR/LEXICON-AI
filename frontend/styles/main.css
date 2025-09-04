@@ -1,0 +1,32 @@
+/*
+  Archivo: frontend/styles/main.css
+  Propósito: Punto de entrada principal para todos los estilos del proyecto.
+*/
+
+/* 1. Settings */
+@import url('./1-settings/_variables.css');
+
+/* 2. Tools */
+
+/* 3. Generic */
+@import url('./3-generic/_reset.css');
+
+/* 4. Elements */
+@import url('./4-elements/_html-and-body.css');
+
+/* 5. Objects */
+@import url('./5-objects/_layout.css');
+@import url('./5-objects/_panel.css');
+
+/* 6. Components */
+@import url('./6-components/_button.css');
+@import url('./6-components/_forms.css');
+@import url('./6-components/_doc-card.css');
+@import url('./6-components/_reader.css');
+@import url('./6-components/_lexicon-table.css');
+@import url('./6-components/_word-bubble.css');
+@import url('./6-components/_toast.css');
+@import url('./6-components/_main-menu.css');
+
+/* 7. Utilities */
+@import url('./7-utilities/_utilities.css');
