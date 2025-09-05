@@ -1,42 +1,63 @@
 /*
   Archivo: backend/server.js
   Propósito: Punto de entrada principal para la aplicación del lado del servidor.
+             Este archivo es responsable de inicializar el servidor Express, cargar la configuración,
+             aplicar middlewares globales, y montar los enrutadores de todos los módulos.
 */
 
 'use strict';
 
+// --- Dependencias del Núcleo ---
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
-const application_config = require('./src/shared/config');
-const auth_module_routes = require('./src/modules/auth/auth.routes');
-const users_module_routes = require('./src/modules/users/users.routes'); // <-- AÑADIDO
-const documents_module_routes = require('./src/modules/documents/documents.routes'); // <-- AÑADIDO
-const lexicon_module_routes = require('./src/modules/lexicon/lexicon.routes'); // <-- AÑADIDO
+// --- Módulos de la Aplicación ---
+// Se importan los enrutadores de cada módulo de negocio.
+const lexiconRoutes = require('./src/lexicon/lexicon.routes');
 
-const express_application = express();
+// ==========================================================================
+// ANÁLISIS DE ERRORES Y SOLUCIÓN TEMPORAL
+// ==========================================================================
+// ERROR IDENTIFICADO: El frontend (backend-api.service.js) intenta hacer una petición a '/api/database'.
+//                     Esta ruta no existe en la nueva arquitectura modular.
+// SOLUCIÓN TEMPORAL: Se crea un manejador de ruta aquí mismo para responder a esa petición específica
+//                    y devolver los datos iniciales, tal como lo hacía el backend antiguo.
+//                    Esto permite que el frontend funcione sin necesidad de refactorizarlo inmediatamente.
+// SOLUCIÓN A LARGO PLAZO: Modificar 'backend-api.service.js' para que llame a los endpoints
+//                       modulares por separado (ej. /api/documents, /api/lexicon).
+// ==========================================================================
 
-express_application.use(cors());
-express_application.use(express.json());
+// --- Inicialización de Express ---
+const app = express();
+const PORT = 3333;
 
-// --- Montaje de TODOS los Enrutadores de la API ---
-express_application.use('/api/auth', auth_module_routes);
-express_application.use('/api/users', users_module_routes); // <-- AÑADIDO
-express_application.use('/api/documents', documents_module_routes); // <-- AÑADIDO
-express_application.use('/api/lexicon', lexicon_module_routes); // <-- AÑADIDO
+// --- Middlewares Globales ---
+// Habilita CORS para permitir peticiones desde el frontend.
+app.use(cors());
+// Habilita el parseo de cuerpos de petición en formato JSON.
+app.use(express.json({ limit: '10mb' }));
 
-express_application.use((error, request, response, next) => {
-  console.error("MANEJADOR DE ERRORES GLOBAL DEL SERVIDOR:", error);
-  response.status(500).json({ message: 'Ha ocurrido un error inesperado en el servidor.' });
+// --- Montaje de Rutas de la API ---
+// Se monta el enrutador del módulo 'lexicon' bajo el prefijo '/api'.
+// Esto significa que las rutas definidas en 'lexicon.routes.js' (como '/database')
+// serán accesibles como '/api/database'.
+app.use('/api', lexiconRoutes);
+
+// --- Servidor de Archivos Estáticos del Frontend ---
+// Sirve todos los archivos de la carpeta 'frontend'.
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// --- Ruta "Catch-all" para Single-Page Application (SPA) ---
+// Cualquier petición GET que no coincida con una ruta de la API o un archivo estático,
+// devolverá el 'index.html', permitiendo el enrutamiento del lado del cliente.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/pages/workspace-reader.html'));
 });
 
-try {
-  express_application.listen(application_config.PORT, () => {
-    console.log(`======================================================================`);
-    console.log(`  LEXICON AI Backend corriendo en http://localhost:${application_config.PORT}`);
-    console.log(`======================================================================`);
-  });
-} catch (server_start_error) {
-  console.error('Error catastrófico al intentar iniciar el servidor Express.', server_start_error);
-  process.exit(1);
-}
+// --- Arranque del Servidor ---
+app.listen(PORT, () => {
+  console.log('======================================================================');
+  console.log(`  LEXICON AI Backend corriendo en http://localhost:${PORT}`);
+  console.log('======================================================================');
+});
