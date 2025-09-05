@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LEXICON AI</title>
+  <link rel="stylesheet" href="assets/styles/main.css">
+</head>
+<body>
+  <header class="l-main-header">
+    <h1>LEXICON AI</h1>
+    <nav class="c-main-menu">
+      <button id="btnLeft" class="c-main-menu__btn" title="Mostrar/ocultar Biblioteca"><img src="assets/images/plumillallena.png" alt="Biblioteca" class="c-main-menu__icon"></button>
+      <button id="btnTheme" class="c-main-menu__btn" title="Modo oscuro/claro"><img src="assets/images/luna-estrellas.png" alt="Modo oscuro" class="c-main-menu__icon"></button>
+      <button id="btnFocus" class="c-main-menu__btn" title="Activar/desactivar lectura focalizada"><img src="assets/images/LecturaFocalizada.png" alt="Lectura Focalizada" class="c-main-menu__icon"></button>
+      <button id="btnRight" class="c-main-menu__btn" title="Mostrar/ocultar Léxico"><img src="assets/images/rodillolleno.png" alt="Léxico" class="c-main-menu__icon"></button>
+    </nav>
+  </header>
+
+  <main class="l-app" id="app">
+    
+    <aside class="l-app__panel l-app__panel--left c-panel">
+      <h2>Biblioteca</h2>
+      <div class="c-add-doc-form">
+        <input id="docTitle" type="text" class="c-form-input c-add-doc-form__title" placeholder="Título del documento...">
+        <button id="addDoc" class="c-btn c-add-doc-form__add-btn">Agregar</button>
+        <button id="toggleAdvanced" class="c-config-btn" title="Opciones avanzadas">
+          <img src="assets/images/configuraciones.png" alt="Opciones avanzadas">
+        </button>
+      </div>
+      <textarea id="docText" class="c-form-textarea" placeholder="Pega aquí tu texto..."></textarea>
+      <div id="advancedControls" class="c-advanced-controls">
+        <div class="l-grid l-grid--2-cols">
+          <button id="clearFields" class="c-btn c-btn--ghost">Limpiar</button>
+          <button id="exportDB" class="c-btn c-btn--ghost">Exportar (JSON)</button>
+          <button id="importDB" class="c-btn c-btn--ghost">Importar (JSON)</button>
+          <button id="wipeDB" class="c-btn c-btn--gray">Borrar todo</button>
+        </div>
+      </div>
+      <hr class="c-separator" />
+      <input type="search" id="searchDocs" class="c-form-input u-mb-8" placeholder="Buscar documento...">
+      <div id="docList" class="l-grid"></div>
+    </aside>
+
+    <section class="l-app__main c-panel">
+      <div class="c-reader-toolbar">
+        <div class="c-reader-toolbar__group c-reader-toolbar__group--title">
+          <strong id="currentDocTitle">Sin documento</strong>
+          <span id="docInfo" class="u-text-muted"></span>
+        </div>
+        <div id="highlightControls" class="c-reader-toolbar__group">
+          <div class="c-numeric-control">
+            <label class="c-numeric-control__label">Fuente</label>
+            <input type="number" id="fontValue" class="c-numeric-control__input" value="18" min="10" max="40">
+          </div>
+          <div class="c-numeric-control">
+            <label class="c-numeric-control__label">Opacidad</label>
+            <input type="number" id="opacityValue" class="c-numeric-control__input" value="25" min="0" max="100">
+          </div>
+          <div class="c-filter-bar">
+            <div id="filterAll" class="c-filter-bar__circle c-filter-bar__circle--all" title="Todos"></div>
+            <div id="filterKnown" class="c-filter-bar__circle c-filter-bar__circle--known" title="Aprendida"></div>
+            <div id="filterLearning" class="c-filter-bar__circle c-filter-bar__circle--learning" title="En proceso"></div>
+            <div id="filterUnknown" class="c-filter-bar__circle c-filter-bar__circle--unknown" title="No aprendida"></div>
+          </div>
+        </div>
+        <div id="focusControls" class="c-reader-toolbar__group c-focus-controls">
+            <button class="c-focus-controls__btn is-active" data-focus-mode="word" title="Navegar por palabra">Palabra</button>
+            <button class="c-focus-controls__btn" data-focus-mode="phrase" title="Navegar por frase/delimitador">Frase</button>
+            <button class="c-focus-controls__btn" data-focus-mode="sentence" title="Navegar por oración">Oración</button>
+        </div>
+      </div>
+      <div class="c-legend">
+        <span class="c-legend__item"><span class="c-legend__dot c-legend__dot--none"></span>Sin estado</span>
+        <span class="c-legend__item"><span class="c-legend__dot c-legend__dot--unknown"></span>No aprendida</span>
+        <span class="c-legend__item"><span class="c-legend__dot c-legend__dot--learning"></span>En proceso</span>
+        <span class="c-legend__item"><span class="c-legend__dot c-legend__dot--known"></span>Aprendida</span>
+      </div>
+      <div id="reader" class="c-reader"></div>
+    </section>
+
+    <aside class="l-app__panel l-app__panel--right c-panel">
+      <h2>Mi Lexicon</h2>
+      <div class="c-lexicon-toolbar">
+        <input id="searchLex" type="text" class="c-form-input" placeholder="Buscar palabra...">
+        <select id="filterStatus" class="c-form-select">
+          <option value="all">Todas (estado)</option>
+          <option value="none">Sin estado</option>
+          <option value="unknown">No aprendidas</option>
+          <option value="learning">En proceso</option>
+          <option value="known">Aprendidas</option>
+        </select>
+        <button id="exportLexCSV" class="c-btn c-btn--ghost">Exportar CSV</button>
+        <button id="importCsvBtn" class="c-btn c-btn--ghost">Importar CSV</button>
+        <input type="file" id="importCsvFile" style="display:none" accept=".csv" />
+      </div>
+      <div class="c-lexicon-table-wrapper">
+        <table id="lexTable" class="c-lexicon-table">
+          <thead><tr><th class="c-lexicon-table__header">Palabra (lema)</th><th class="c-lexicon-table__header">Estado</th></tr></thead>
+          <tbody id="lexTableBody"></tbody>
+        </table>
+      </div>
+    </aside>
+  </main>
+  
+  <div id="bubble" class="c-word-bubble">
+    <div class="c-word-bubble__main-content">
+      <div class="c-word-bubble__header">
+        <div id="bWord" class="c-word-bubble__title"></div>
+      </div>
+      <div id="bLangTags" class="c-word-bubble__lang-tags">
+        </div>
+      <div id="bDefinition" class="c-word-bubble__definition"></div>
+      
+      <div class="c-word-bubble__actions">
+        <button data-status="unknown" class="c-btn" style="background: var(--red);">No aprendida</button>
+        <button data-status="learning" class="c-btn" style="background: var(--amber);">Difícil</button>
+        <button data-status="known" class="c-btn" style="background: var(--green);">Aprendida</button>
+        <button data-status="null" class="c-btn c-btn--icon" title="Quitar estado">
+          <img src="assets/images/eliminar.png" alt="Quitar estado">
+        </button>
+      </div>
+    </div>
+    <div class="c-word-bubble__ai-panel">
+      <button id="editButton" class="c-ai-btn" title="Editar significado y traducción">
+        <img src="assets/images/edit_icon.png" alt="Editar">
+      </button>
+      <button id="aiButton" class="c-ai-btn" title="Usar Lexicon AI con esta palabra">
+        <img src="assets/images/MILOGONEGRO.png" alt="Lexicon AI">
+      </button>
+      <button id="regenerateButton" class="c-ai-btn" title="Regenerar traducciones/definiciones">
+        <img src="assets/images/refresh_icon.png" alt="Regenerar">
+      </button>
+    </div>
+  </div>
+  
+  <div id="toast" class="c-toast">Listo</div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="src/shared/utils/dom.helpers.js"></script>
+  <script src="src/shared/utils/helpers.js"></script>
+  <script src="src/shared/utils/text-processor.js"></script>
+  <script src="src/core/api.service.js"></script>
+  <script src="src/features/lexicon/state/documents.model.js"></script>
+  <script src="src/features/lexicon/state/vocabulary.model.js"></script>
+  <script src="src/features/lexicon/components/library.component.js"></script>
+  <script src="src/features/lexicon/components/reader.component.js"></script>
+  <script src="src/features/lexicon/components/vocabulary.component.js"></script>
+  <script src="src/features/lexicon/pages/workspace.page.js"></script>
+  <script src="src/core/main.js"></script>
+</body>
+</html>

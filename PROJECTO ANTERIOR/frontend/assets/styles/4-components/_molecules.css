@@ -1,0 +1,216 @@
+/* ==========================================================================
+   Archivo: css/4-components/_molecules.css
+   Estilos para las MOLÉCULAS: grupos de átomos que forman un componente.
+   ========================================================================== */
+
+/* --- Keyframes para Animación --- */
+@keyframes highlight-card {
+  from { background-color: rgba(9, 105, 218, 0.1); }
+  to { background-color: var(--card); }
+}
+
+/* --- Componente de Formulario --- */
+.c-add-doc-form {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+.c-add-doc-form__title {
+  flex-grow: 1;
+}
+.c-add-doc-form__add-btn {
+  flex-shrink: 0;
+}
+.c-config-btn {
+  background: none;
+  border: none; 
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+.c-config-btn:hover {
+  background-color: var(--bg);
+  transform: rotate(45deg);
+}
+.c-config-btn img {
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+.c-advanced-controls {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, margin-top 0.4s ease-out;
+  margin-top: 0;
+}
+.c-advanced-controls.is-visible {
+  max-height: 100px;
+  margin-top: 8px;
+}
+
+/* --- Componente: Tarjeta de Documento (Doc Card) --- */
+.c-doc-card {
+  position: relative; 
+  border: 1px solid var(--line);
+  border-left: 3px solid transparent; 
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  gap: 6px;
+  background: var(--card);
+  transition: transform 0.8s ease-in-out, border-color 0.2s ease;
+}
+.c-doc-card--is-active {
+  border-left-color: var(--blue);
+}
+.c-doc-card.just-activated {
+  animation: highlight-card 0.7s ease-out;
+}
+.c-doc-card__title {
+  font-weight: 700;
+  padding-right: 25px; 
+}
+.c-doc-card__meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+.c-doc-card__actions {
+  display: flex;
+  align-items: center; 
+  gap: 8px;
+}
+.c-doc-card__pin-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.4;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  border-radius: 4px;
+}
+.c-doc-card__pin-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  background-color: var(--line);
+}
+.c-doc-card__pin-btn--pinned {
+  opacity: 1;
+}
+.c-doc-card__pin-btn img {
+  width: 16px;
+  height: 16px;
+  display: block;
+  pointer-events: none;
+}
+.c-doc-card__indicator {
+  margin-left: auto; 
+  font-size: 14px;
+  color: var(--blue);
+}
+
+/* --- Componente: Control Numérico (Numeric Control) --- */
+.c-numeric-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.c-numeric-control__label {
+  font-size: 12px;
+  color: var(--muted);
+}
+.c-numeric-control__input {
+  width: 50px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  text-align: center;
+  font-weight: 600;
+  background-color: var(--bg);
+}
+.c-numeric-control__input::-webkit-outer-spin-button,
+.c-numeric-control__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.c-numeric-control__input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* --- Componente: Barra de Filtros (Filter Bar) --- */
+.c-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 6px;
+}
+.c-filter-bar__circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+.c-filter-bar__circle:hover { border-color: var(--line); }
+.c-filter-bar__circle--is-active { border-color: var(--line); }
+.c-filter-bar__circle--known.c-filter-bar__circle--is-active { background-color: var(--green); }
+.c-filter-bar__circle--learning.c-filter-bar__circle--is-active { background-color: var(--amber); }
+.c-filter-bar__circle--unknown.c-filter-bar__circle--is-active { background-color: var(--red); }
+.c-filter-bar__circle--all { background: linear-gradient(to right, var(--red), var(--amber), var(--green)); }
+.c-filter-bar__circle--all:not(.c-filter-bar__circle--is-active) { background: transparent; }
+
+/* --- Componente: Leyenda (Legend) --- */
+.c-legend {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+.c-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- Estilos para la palabra activa en modo focalizado --- */
+.c-reader__word.is-word-focused {
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: var(--blue);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.c-reader__word.is-word-focused::before {
+  content: '|';
+  color: var(--blue);
+  font-weight: bold;
+  margin-right: 2px;
+}
+.c-reader__word.is-word-focused::after {
+  content: '|';
+  color: var(--blue);
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+/* MODIFICADO: Se elimina el color de fondo fijo. Ahora se aplica vía JS. */
+.c-reader__word.is-segment-focused {
+  border-radius: 4px;
+}

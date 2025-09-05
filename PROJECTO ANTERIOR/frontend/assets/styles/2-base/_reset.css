@@ -1,0 +1,10 @@
+/* ==========================================================================
+   Archivo: css/2-base/_reset.css
+   Reset de estilos básicos para consistencia entre navegadores.
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

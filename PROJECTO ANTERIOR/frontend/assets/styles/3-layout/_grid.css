@@ -1,0 +1,13 @@
+/* ==========================================================================
+   Archivo: css/3-layout/_grid.css
+   Clases de utilidad para rejillas.
+   ========================================================================== */
+
+.l-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.l-grid--2-cols {
+  grid-template-columns: 1fr 1fr;
+}

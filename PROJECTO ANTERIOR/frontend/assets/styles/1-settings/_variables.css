@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Archivo: css/1-settings/_variables.css
+   Contiene todas las variables CSS globales del proyecto.
+   ========================================================================== */
+
+:root {
+  /* Espaciado y Radios */
+  --gap: 14px;
+  --radius: 12px;
+
+  /* Paleta de Colores - Modo Claro */
+  --bg: #f6f8fa;
+  --card: #fff;
+  --ink: #1f2328;
+  --muted: #6e7781;
+  --line: #eaeef2;
+
+  /* Paleta de Colores - Semánticos */
+  --blue: #0969da;
+  --green: #2da44e;
+  --amber: #d29922;
+  --red: #d73a49;
+  --gray: #57606a;
+}

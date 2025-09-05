@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Archivo: css/main.css
+   Punto de entrada principal para todos los estilos del proyecto.
+   Importa los parciales en el orden de la metodología ITCSS.
+   ========================================================================== */
+
+/* 1. Settings: Variables globales, fuentes, etc. */
+@import url('./1-settings/_variables.css');
+
+/* 2. Base: Estilos para etiquetas HTML (reset, tipografía base). */
+@import url('./2-base/_reset.css');
+@import url('./2-base/_base.css');
+
+/* 3. Layout: Clases para la maquetación principal de la página. */
+@import url('./3-layout/_panels.css');
+@import url('./3-layout/_grid.css');
+
+/* 4. Components: La UI descompuesta en piezas reutilizables (Atomic Design). */
+@import url('./4-components/_atoms.css');
+@import url('./4-components/_molecules.css');
+@import url('./4-components/_organisms.css');
