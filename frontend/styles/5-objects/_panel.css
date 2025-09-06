@@ -1,13 +1,99 @@
-/*
-  Archivo: frontend/styles/5-objects/_panel.css
-  Propósito: Define el estilo de un objeto "panel" reutilizable. Es un contenedor genérico
-             con fondo, borde y sombra, usado en toda la aplicación.
-*/
+/* frontend/styles/5-objects/_panel.css (VERSIÓN CON ROTACIÓN DE FLECHA CORREGIDA) */
 
 .c-panel {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: 0 6px 20px rgba(0,0,0,.04);
   padding: 14px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+}
+
+.c-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.c-panel-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  height: 25px; 
+}
+
+.c-panel-toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius);
+  transition: transform 0.3s ease;
+}
+
+.c-panel-toggle-btn img {
+  width: 20px;
+  height: 20px;
+  display: block;
+  /* Por defecto un filtro que lo oscurece */
+  filter: invert(30%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%);
+}
+
+/* En tema oscuro, se invierte para hacerlo claro */
+body.dark .c-panel-toggle-btn img {
+  filter: invert(80%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+/* --- LÓGICA PARA PANELES COLAPSADOS --- */
+.l-app__panel.is-collapsed {
+  width: 60px;
+  min-width: 60px;
+}
+
+.l-app__panel.is-collapsed > *:not(.c-panel-header) {
+  display: none;
+}
+
+.l-app__panel.is-collapsed .c-panel-header {
+  flex-direction: column;
+  align-items: center;
+  border-bottom: none;
+  padding: 0;
+  margin: 0;
+  gap: 15px;
+}
+
+/* Mueve el botón de toggle al inicio (arriba) SÓLO en modo colapsado */
+.l-app__panel.is-collapsed .c-panel-toggle-btn {
+  order: -1;
+}
+
+/* Rotación para el panel izquierdo */
+.l-app__panel--left .c-panel-toggle-btn {
+  transform: rotate(0deg); /* Estado normal */
+}
+
+.l-app__panel--left.is-collapsed .c-panel-toggle-btn {
+  transform: rotate(180deg); /* Rota 180 grados al colapsar */
+}
+
+/* Rotación para el panel derecho (parte crucial) */
+.l-app__panel--right .c-panel-toggle-btn {
+  transform: rotate(180deg); /* Estado normal: apunta a la izquierda */
+}
+
+.l-app__panel--right.is-collapsed .c-panel-toggle-btn {
+  transform: rotate(0deg); /* Rota a 0 grados (apunta a la derecha) al colapsar */
+}
+
+
+/* --- CORRECCIÓN PARA EL PANEL DERECHO (Orden de elementos en modo expandido) --- */
+.l-app__panel--right .c-panel-header {
+  flex-direction: row-reverse;
 }

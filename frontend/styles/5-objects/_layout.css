@@ -1,7 +1,7 @@
 /*
   Archivo: frontend/styles/5-objects/_layout.css
-  Propósito: Define las clases de maquetación principal (layout objects) que estructuran la aplicación,
-             siguiendo un enfoque Mobile First.
+  Propósito: Define las clases de maquetación principal.
+             (VERSIÓN CORREGIDA CON ENFOQUE "DESKTOP FIRST")
 */
 
 .l-main-header {
@@ -12,38 +12,81 @@
   padding: 0 10px;
 }
 
+/* ================================================================== */
+/* 1. ESTILOS POR DEFECTO PARA ESCRITORIO (DESKTOP FIRST)             */
+/* ================================================================== */
+
 .l-app {
   display: flex;
-  flex-direction: column; /* MOBILE FIRST: Por defecto, los paneles se apilan */
-  gap: 20px;
+  flex-direction: row; /* Por defecto, la dirección es en fila (horizontal) */
+  gap: 10px;
+  flex: 1; /* <-- AÑADIR ESTA LÍNEA: Hace que este contenedor crezca */
+  min-height: 0; /* <-- AÑADIR ESTA LÍNEA: Buena práctica para evitar desbordes en flex */
+ align-items: stretch; /* Asegura que los paneles tengan la misma altura */
+  justify-content: center; /* <-- AÑADIR ESTA LÍNEA: Centra el contenido */
+
 }
 
 .l-app__panel {
-  width: 100%; /* En móvil, los paneles ocupan todo el ancho */
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.l-app__main {
-  flex-shrink: 0; /* Evita que el panel principal se encoja */
+/* Definimos el orden y tamaño para la vista de escritorio */
+.l-app__panel--left {
+  order: 1; /* 1. Biblioteca a la izquierda */
+  width: 300px;
+  flex-shrink: 0; /* Evita que el panel se encoja */
 }
 
-/* Cuando la pantalla sea suficientemente grande... */
-@media (min-width: var(--breakpoint-lg)) {
+.l-app__main {
+  order: 2; /* 2. Lector en el centro */
+  flex: 1;  /* Permite que crezca para ocupar el espacio */
+  max-width: 900px;
+  margin: 0 auto;
+}
+  
+.l-app__panel--right {
+  order: 3; /* 3. Léxico a la derecha */
+  width: 280px;
+  flex-shrink: 0; /* Evita que el panel se encoja */
+}
+
+/* ================================================================== */
+/* 2. AJUSTES PARA PANTALLAS PEQUEÑAS (TABLETS Y MÓVILES)             */
+/* ================================================================== */
+
+/* Si la pantalla es MÁS PEQUEÑA que nuestro punto de quiebre... */
+@media (max-width: 992px) {
   .l-app {
-    flex-direction: row; /* ...cambiamos a un layout de fila */
+    flex-direction: column; /* ...entonces apilamos los paneles verticalmente. */
   }
 
-  .l-app__panel--left {
-    width: 300px;
-  }
-
-  .l-app__panel--right {
-    width: 280px;
-  }
-
+  /* Reordenamos para que el lector aparezca primero en la vista móvil */
   .l-app__main {
-    flex: 1; /* El panel principal ahora puede crecer para ocupar el espacio */
-    max-width: 900px;
-    margin: 0 auto;
+    order: 1;
   }
+  .l-app__panel--left {
+    order: 2;
+  }
+  .l-app__panel--right {
+    order: 3;
+  }
+
+  /* Hacemos que los paneles laterales ocupen todo el ancho en móvil */
+  .l-app__panel--left,
+  .l-app__panel--right {
+    width: 100%;
+  }
+}
+
+/*
+  Clase para el contenido dinámico dentro de los paneles laterales.
+  Asegura que el contenido (como la Biblioteca o el Léxico)
+  crezca para llenar el espacio disponible debajo de la barra de herramientas.
+*/
+.l-side-panel__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Permite que el contenedor crezca */
+  min-height: 0; /* Evita problemas de desborde en contenedores flex */
 }

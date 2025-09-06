@@ -10,23 +10,49 @@
   <header class="l-main-header">
     <h1>LEXICON AI</h1>
     <nav class="c-main-menu">
-      <button id="btnLeft" class="c-main-menu__btn" title="Mostrar/ocultar Biblioteca"><img src="../assets/images/plumillallena.png" alt="Biblioteca" class="c-main-menu__icon"></button>
-      <button id="btnTheme" class="c-main-menu__btn" title="Modo oscuro/claro"><img src="../assets/images/luna-estrellas.png" alt="Modo oscuro" class="c-main-menu__icon"></button>
-      <button id="btnFocus" class="c-main-menu__btn" title="Activar/desactivar lectura focalizada"><img src="../assets/images/LecturaFocalizada.png" alt="Lectura Focalizada" class="c-main-menu__icon"></button>
-      <button id="btnRight" class="c-main-menu__btn" title="Mostrar/ocultar Léxico"><img src="../assets/images/rodillolleno.png" alt="Léxico" class="c-main-menu__icon"></button>
+      <button id="btnTheme" class="c-main-menu__btn" title="Modo oscuro/claro">
+        <img src="../assets/images/luna-estrellas.svg" alt="Modo oscuro" class="c-main-menu__icon icon-initial">
+        <img src="../assets/images/sol.svg" alt="Modo claro" class="c-main-menu__icon icon-active">
+      </button>
+      <div id="userAccountSection" class="c-user-account">
+        <img src="../assets/images/user-avatar.svg" alt="Avatar del usuario" class="c-user-account__avatar">
+        <span class="c-user-account__name">Usuario</span>
+      </div>
     </nav>
   </header>
 
   <main class="l-app" id="app">
-    <aside class="l-app__panel l-app__panel--left c-panel">
-      <h2>Biblioteca</h2>
-      <div class="c-add-doc-form">
-        <input id="docTitle" type="text" class="c-form-input c-add-doc-form__title" placeholder="Título del documento...">
-        <button id="addDoc" class="c-btn c-add-doc-form__add-btn">Agregar</button>
+    <aside id="leftPanel" class="l-app__panel l-app__panel--left c-panel">
+      <div class="c-panel-header">
+        <div class="c-side-toolbar">
+          <button id="btnFocus" class="c-side-toolbar__btn" title="Modo de lectura focalizada">
+            <img src="../assets/images/LecturaFocalizadaInicial.svg" alt="Lectura Focalizada" class="icon-initial">
+            <img src="../assets/images/LecturaFocalizadaActivo.svg" alt="Lectura Focalizada Activo" class="icon-active">
+          </button>
+          <hr class="u-separator--vertical" />
+          <button data-view="libraryView" class="c-side-toolbar__btn" title="Biblioteca">
+            <img src="../assets/images/DocumentosInicial.svg" alt="Biblioteca" class="icon-initial">
+            <img src="../assets/images/DocumentosSegundo.svg" alt="Biblioteca Activo" class="icon-active">
+          </button>
+          <hr class="u-separator--vertical" />
+          <button data-view="lexiconView" class="c-side-toolbar__btn" title="Léxico">
+            <img src="../assets/images/VocabularyInicial.svg" alt="Léxico" class="icon-initial">
+            <img src="../assets/images/VocabularySegundo.svg" alt="Léxico Activo" class="icon-active">
+          </button>
+          <hr class="u-separator--vertical" />
+          <button class="c-side-toolbar__btn" title="Bolígrafo">
+            <img src="../assets/images/boligrafoInactivado.svg" alt="Bolígrafo Inactivo" class="icon-initial">
+            <img src="../assets/images/cepilloActivo.svg" alt="Bolígrafo Activo" class="icon-active">
+          </button>
+        </div>
+        <button id="toggleLeftPanelBtn" class="c-panel-toggle-btn" title="Ocultar Panel Izquierdo">
+          <img src="../assets/images/Flecha Izquierda2.svg" alt="Ocultar">
+        </button>
       </div>
-      <textarea id="docText" class="c-form-textarea" placeholder="Pega aquí tu texto..."></textarea>
-      <hr class="u-separator" />
-      <div id="docList" class="l-grid"></div>
+
+      <div id="leftPanelTitle" class="c-panel-title"></div>
+      <div id="libraryView" class="l-side-panel__content is-hidden"></div>
+      <div id="lexiconView" class="l-side-panel__content is-hidden"></div>
     </aside>
 
     <section class="l-app__main c-panel">
@@ -37,56 +63,63 @@
       <div id="reader" class="c-reader"></div>
     </section>
 
-    <aside class="l-app__panel l-app__panel--right c-panel">
-      <h2>Mi Léxico</h2>
-      <div id="lexTableBody" class="c-lexicon-table-wrapper"></div>
+    <aside id="rightPanel" class="l-app__panel l-app__panel--right c-panel">
+      <div class="c-panel-header">
+        <div class="c-side-toolbar">
+          <button class="c-side-toolbar__btn" title="Paleta">
+            <img src="../assets/images/PaletaInicial.svg" alt="Paleta Inactiva" class="icon-initial">
+            <img src="../assets/images/PaletaSegundo.svg" alt="Paleta Activa" class="icon-active">
+          </button>
+          <hr class="u-separator--vertical" />
+          <button class="c-side-toolbar__btn" title="Pintar">
+            <img src="../assets/images/pintarInactivo.svg" alt="Pintar Inactivo" class="icon-initial">
+            <img src="../assets/images/pintarActivado.svg" alt="Pintar Activo" class="icon-active">
+          </button>
+          <hr class="u-separator--vertical" />
+          <button class="c-side-toolbar__btn" title="Pincel">
+            <img src="../assets/images/PincelInicial2.svg" alt="Pincel Inactivo" class="icon-initial">
+            <img src="../assets/images/PincelSegundo.svg" alt="Pincel Activo" class="icon-active">
+          </button>
+          <hr class="u-separator--vertical" />
+          <button class="c-side-toolbar__btn" title="Cepillo">
+            <img src="../assets/images/cepillarInactivo.svg" alt="Cepillo Inactivo" class="icon-initial">
+            <img src="../assets/images/cepilloActivo.svg" alt="Cepillo Activo" class="icon-active">
+          </button>
+        </div>
+        <button id="toggleRightPanelBtn" class="c-panel-toggle-btn" title="Ocultar Panel Derecho">
+          <img src="../assets/images/Flecha Izquierda2.svg" alt="Ocultar/Mostrar">
+        </button>
+      </div>
+      <div id="rightPanelTitle" class="c-panel-title"></div>
+      <div id="highlightToolsView" class="l-side-panel__content is-hidden"></div>
     </aside>
   </main>
   
-  <div id="bubble" class="c-word-bubble">
-    <div class="c-word-bubble__main-content">
-      <div id="bWord" class="c-word-bubble__title"></div>
-      <div id="bDefinition" class="c-word-bubble__definition"></div>
-      <div class="c-word-bubble__actions">
-        <button data-status="unknown" class="c-btn">No aprendida</button>
-        <button data-status="learning" class="c-btn">En proceso</button>
-        <button data-status="known" class="c-btn">Aprendida</button>
-        <button data-status="null" class="c-btn c-btn--icon" title="Quitar estado">
-          <img src="../assets/images/eliminar.png" alt="Quitar estado">
-        </button>
-      </div>
-    </div>
-  </div>
-  
+  <div id="bubble" class="c-word-bubble"></div>
   <div id="toast" class="c-toast">Listo</div>
 
-  
+
   <script src="../src/core/dom-elements.js" defer></script>
   <script src="../src/core/event-bus.js" defer></script>
   <script src="../src/utils/debouncer.js" defer></script>
   <script src="../src/utils/text-processor.js" defer></script>
-  
   <script src="../src/modules/error-handling/global-error.handler.js" defer></script>
   <script src="../src/modules/notifications/toast.handler.js" defer></script>
   <script src="../src/modules/theme/theme.manager.js" defer></script>
-
   <script src="../src/services/backend-api.service.js" defer></script>
   <script src="../src/services/external-apis.service.js" defer></script>
-  
   <script src="../src/state/documents.state.js" defer></script>
   <script src="../src/state/lexicon.state.js" defer></script>
   <script src="../src/state/user-settings.state.js" defer></script>
   <script src="../src/state/user-session.state.js" defer></script>
-  
   <script src="../src/components/Library/library.component.js" defer></script>
   <script src="../src/components/Reader/reader.component.js" defer></script>
   <script src="../src/components/LexiconTable/lexicon-table.component.js" defer></script>
   <script src="../src/components/WordBubble/word-bubble.component.js" defer></script>
   <script src="../src/components/MainMenu/main-menu.component.js" defer></script>
   <script src="../src/components/UserProfileForm/user-profile-form.component.js" defer></script>
-  
+  <script src="../src/components/WorkspaceLayout/workspace-layout.component.js" defer></script>
   <script src="../src/pages/workspace-reader.page.loader.js" defer></script>
-  
   <script src="../src/core/app.initializer.js" defer></script>
 </body>
 </html>

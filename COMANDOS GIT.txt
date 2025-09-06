@@ -1,0 +1,14 @@
+# 1. Inicia el repositorio
+git init
+
+# 2. Agrega todos los archivos
+git add .
+
+# 3. Guarda los cambios con un mensaje
+git commit -m "Versión inicial del proyecto"
+
+# 4. Conecta con tu repositorio en GitHub (¡cambia esta URL!)
+git remote add origin https://github.com/tu-usuario/tu-repositorio.git
+
+# 5. Sube los archivos
+git push -u origin master

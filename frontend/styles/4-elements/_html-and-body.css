@@ -1,15 +1,24 @@
 /*
   Archivo: frontend/styles/4-elements/_html-and-body.css
-  Propósito: Define los estilos base para las etiquetas raíz del documento, como la tipografía,
-             el color de fondo y el comportamiento del tema oscuro/claro.
+  Propósito: Define los estilos base para las etiquetas raíz del documento.
 */
 
+/* Hacemos que la raíz del documento ocupe toda la altura de la ventana */
+html, body {
+  height: 100vh;
+  overflow: hidden; /* Prevenimos el scroll en la página principal */
+}
+
 body {
-  padding: 20px;
+  padding: 5px 7px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   color: var(--ink);
   background: var(--bg);
   transition: background 0.2s ease, color 0.2s ease;
+
+  /* Convertimos el body en un contenedor flex vertical */
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {

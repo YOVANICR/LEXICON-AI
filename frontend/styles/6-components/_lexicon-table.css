@@ -18,6 +18,7 @@
   overflow: hidden;
   max-height: 60vh;
   overflow-x: auto; /* Permite scroll horizontal si es necesario en móvil */
+  min-height: 200px; 
 }
 
 .c-lexicon-table {

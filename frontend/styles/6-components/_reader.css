@@ -23,15 +23,17 @@
 
 .c-reader {
   position: relative;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 14px;
-  background: var(--card);
-  min-height: 50vh;
-  max-height: 70vh;
-  overflow: auto;
+  /* Se eliminan las siguientes 4 líneas para expandir el área */
+  /* border: 1px solid var(--line); */
+  /* border-radius: 12px; */
+  /* padding: 14px; */
+  /* background: var(--card); */
+  
   line-height: 1.7;
   font-size: 18px;
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
 }
 
 .c-reader__word:hover {

@@ -17,3 +17,14 @@
 .u-mb-8 {
   margin-bottom: 8px !important;
 }
+
+/* frontend/styles/7-utilities/_utilities.css (añadir al final) */
+.is-hidden {
+  display: none !important;
+}
+
+.c-main-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
