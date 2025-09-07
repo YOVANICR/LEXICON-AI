@@ -31,7 +31,16 @@ const TranslationService = (function () {
   hi: "हिन्दी",
   ko: "한국어",
   pt: "Português",
-  it: "Italiano"
+  it: "Italiano",
+  ar: "العربية",
+  bn: "বাংলা",
+  tr: "Türkçe",
+  fa: "فارسی",
+  sw: "Kiswahili",
+  tl: "Filipino",
+  pl: "Polski",
+  uk: "Українська",
+  el: "Ελληνικά"
 };
 
   let strings = {};           // loaded translation map
