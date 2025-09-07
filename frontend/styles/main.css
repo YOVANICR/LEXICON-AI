@@ -28,6 +28,8 @@
 @import url('./6-components/_toast.css');
 @import url('./6-components/_main-menu.css');
 @import url('./6-components/_side-toolbar.css');
+@import url('./6-components/_language-selector.css'); /* <--- NUEVA LÍNEA AÑADIDA */
+@import url('./6-components/fix-tooltips.css'); /* <--- NUEVA LÍNEA AÑADIDA */
 
 /* 7. Utilities: Clases de ayuda para sobreescribir estilos (ej. .u-mb-8). */
 @import url('./7-utilities/_utilities.css');

@@ -25,7 +25,8 @@ const LexiconTableComponent = (function () {
     table_body_element.innerHTML = ''; // Limpiar la tabla antes de renderizar.
 
     if (lexicon_as_array.length === 0) {
-      table_body_element.innerHTML = '<tr><td colspan="2">Tu léxico está vacío.</td></tr>';
+      // MODIFICADO: Se usa el servicio de traducción
+      table_body_element.innerHTML = `<tr><td colspan="2">${TranslationService.t('lexicon_empty_message')}</td></tr>`;
       return;
     }
 
@@ -56,6 +57,14 @@ const LexiconTableComponent = (function () {
   }
 
   /**
+   * @private
+   * Vuelve a renderizar la tabla para aplicar el cambio de idioma en el mensaje de "vacío".
+   */
+  function translateComponent() {
+    renderLexiconTable();
+  }
+
+  /**
    * Inicializa el componente de la tabla del Léxico.
    */
   function initialize() {
@@ -67,6 +76,9 @@ const LexiconTableComponent = (function () {
         local_lexicon_cache[data.lemma] = data.entry;
         renderLexiconTable();
       });
+
+      // --- NUEVA LÓGICA DE TRADUCCIÓN ---
+      EventBus.subscribe('language:changed', translateComponent);
 
       console.log('Componente de Tabla de Léxico inicializado.');
     } catch (error) {

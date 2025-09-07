@@ -1,7 +1,6 @@
 /*
   Archivo: frontend/src/components/MainMenu/main-menu.component.js
   Propósito: Gestiona la lógica de los botones de acción en el menú de navegación principal.
-  (VERSIÓN ACTUALIZADA PARA EL BOTÓN DE TEMA)
 */
 
 const MainMenuComponent = (function () {
@@ -9,39 +8,95 @@ const MainMenuComponent = (function () {
   
   function handleThemeToggleButtonClick() {
     try {
-      // Toggle la clase 'dark' en el body, que CSS usará para cambiar los iconos y estilos
       document.body.classList.toggle('dark');
-      // Puedes guardar esta preferencia en UserSettingsState si lo tienes implementado
-      // UserSettingsState.toggleTheme();
     } catch (error) {
       console.error('Error al cambiar el tema:', error);
-      ToastHandler.showToast('No se pudo cambiar el tema.');
+      ToastHandler.showToast(TranslationService.t('toast_theme_change_error'));
     }
   }
 
   function handleUserAccountClick() {
     try {
       console.log('Se hizo clic en la sección de cuenta de usuario.');
-      ToastHandler.showToast('Funcionalidad de cuenta en desarrollo!');
-    } catch (error) {
+      ToastHandler.showToast(TranslationService.t('toast_account_in_development'));
+    } catch (error)
+    {
       console.error('Error al interactuar con la cuenta de usuario:', error);
-      ToastHandler.showToast('Error en la sección de cuenta.');
+      ToastHandler.showToast(TranslationService.t('toast_account_error'));
     }
+  }
+  
+  function populateLanguageDropdown() {
+    const dropdown = document.getElementById('langDropdown');
+    const availableLanguages = TranslationService.getAvailableLanguages();
+
+    if (!dropdown || !availableLanguages) return;
+    
+    dropdown.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+
+    for (const [code, name] of Object.entries(availableLanguages)) {
+      const link = document.createElement('a');
+      link.href = '#';
+      link.dataset.lang = code;
+      link.textContent = name;
+      fragment.appendChild(link);
+    }
+    
+    dropdown.appendChild(fragment);
+  }
+
+  function handleLanguageButtonClick() {
+    const dropdown = document.getElementById('langDropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('is-hidden');
+    }
+  }
+
+  /**
+   * Maneja el clic en una opción de idioma del menú desplegable.
+   * MEJORADO para ser más robusto.
+   * @param {Event} event - El objeto del evento de clic.
+   */
+  function handleLanguageOptionClick(event) {
+    event.preventDefault();
+    // Nos aseguramos de que el clic fue en un enlace <a> con el atributo data-lang
+    const languageLink = event.target.closest('a[data-lang]');
+    
+    if (!languageLink) return; // Si se hizo clic en otra parte del dropdown, no hacer nada.
+
+    const selectedLang = languageLink.dataset.lang;
+    
+    if (selectedLang) {
+      // La lógica de `try/catch` ahora está dentro de `TranslationService.changeLanguage`
+      TranslationService.changeLanguage(selectedLang);
+      document.getElementById('langDropdown').classList.add('is-hidden');
+    }
+  }
+  
+  function translateComponent() {
+    // Esta función se mantiene por si se necesita en el futuro.
   }
 
   function initialize() {
     try {
       const themeToggleButton = document.getElementById('btnTheme');
       const userAccountSection = document.getElementById('userAccountSection');
-      
+      const languageButton = document.getElementById('btnLang');
+      const languageDropdown = document.getElementById('langDropdown');
+
       if (themeToggleButton) {
         themeToggleButton.addEventListener('click', handleThemeToggleButtonClick);
-        // Establecer el estado inicial del icono de tema si ya hay un tema guardado
-        if (document.body.classList.contains('dark')) {
-          themeToggleButton.classList.add('is-active'); // Esto podría no ser necesario si CSS lo maneja directamente
-        }
       } else {
         console.warn('MainMenuComponent: No se encontró el botón para cambiar el tema.');
+      }
+      
+      if (languageButton && languageDropdown) {
+        populateLanguageDropdown();
+        languageButton.addEventListener('click', handleLanguageButtonClick);
+        languageDropdown.addEventListener('click', handleLanguageOptionClick);
+      } else {
+        console.warn('MainMenuComponent: No se encontraron los elementos del selector de idioma.');
       }
 
       if (userAccountSection) {
@@ -53,7 +108,7 @@ const MainMenuComponent = (function () {
       console.log('Componente de Menú Principal inicializado.');
     } catch (error) {
       console.error('Error al inicializar el Componente de Menú Principal.', error);
-      ToastHandler.showToast('Error al cargar el menú principal.');
+      ToastHandler.showToast(TranslationService.t('toast_main_menu_load_error'));
     }
   }
 

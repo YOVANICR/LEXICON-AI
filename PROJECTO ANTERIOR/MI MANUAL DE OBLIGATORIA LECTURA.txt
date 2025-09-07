@@ -1,0 +1,212 @@
+ AL MOMENTO DE REECTRUCTURAR Y MUDAR MI PROJECTO QUIERO QUE INTEGRES DE FORMA PERFECTA DE MODO QUE ME FACILITE LA DEPURACION DE CODIGO Y MANEJO DE ERRORES, LOS SIGUIENTES PUNTOS:
+
+ERES UN EXPERTO EN PROGRAMACION Y DEBES SABER COMO INCLUIR Y MANEJAR LO SIGUIENTE EN LA ESCRITURA DE MI CODIGO, EN CUANTO AL MENEJO DE ERRORES.
+
+1: Un excelente uso profecional de Carga Asíncrona (async y defer) solo cuando se recomiende y sea beneficioso tanto para el cliente como para el provedor (Yo).
+2: Manejo global de errores (window.onerror). 
+3: Eventos (onerror). 
+4: Async/Await (try...catch). 
+5: Promesas (.then() y .catch())
+6: try...catch Y consol.log y etc.
+
+En cuanto a la escritura de codigo, funciones, alrgorito y software, cada linea posible debe incluir lo siguiente de forma OBLOGATORIA!
+
+1: Escritura en BEM
+2: Variables, codigo, funciones, algoritmos, todo deben estar normbrado de forma SUPER AUTO DECLARATIVAS, para mejorar el entendimiento del codigo y visibilidad de este.
+3: Todo archivo debe estar fuertemente documentado en JSDOCs y comentarios en codigo, tanto css y javascript, menos json y Html.
+5: Cada inicio de un archivo excepto HTML y JSON debe comenzar con la ruta completa de ese archivo dentro de todo el projecto ejemplo frontend/src/shared/utils/dom.helpers.js y tambien Comentar sobre el proposito que tiene ese archivo
+
+TODO CODIGO QUE E DES, DEBE ESTAR CON SU ACTUALIZACION DEL ARCHIVO POR COMPLETO Y NO ME DES ARCHIVOS CON CODIGOS INCOMPLETOS.
+
+
+
+MAPA COMPLETO DE MI WEB
+
+
+
+backend/
+├── database-local/                  // === TU BASE DE DATOS LOCAL PROVISIONAL ===
+│   ├── index/                       // Carpeta para archivos que actúan como tablas de índice.
+│   │   └── users.index.json         // Un "índice" central de usuarios: [{id, email, role, hashedPassword}].
+│   ├── user-data/                   // Contenedor para los datos específicos y privados de cada usuario.
+│   │   └── {userId}/                // Una carpeta por cada usuario, nombrada con su ID único.
+│   │       ├── profile.json           // Configuración de la cuenta del usuario (tema, idioma, nombre, etc.).
+│   │       ├── lexicon.json           // Su léxico personal (palabras y frases guardadas con su estado de aprendizaje).
+│   │       ├── documents/             // Carpeta para sus documentos de texto ya procesados (.txt).
+│   │       └── learning-progress.json // Su progreso en juegos, rachas, puntos y estado de SRS.
+│   └── shared-content/              // Contenido global de la aplicación, accesible según el rol del usuario.
+│       ├── free-tier/               // Contenido accesible para usuarios gratuitos.
+│       │   └── public-stories.json  // Textos o historias que todos los usuarios pueden leer.
+│       └── premium-tier/            // Contenido exclusivo para usuarios de pago.
+│           └── premium-flashcard-decks.json // Mazos de flashcards que requieren una suscripción.
+│
+├── src/                             // === TODO EL CÓDIGO FUENTE DEL SERVIDOR ===
+│   ├── modules/                     // === EL CORAZÓN DE TU APLICACIÓN: LOS MÓDULOS DE NEGOCIO ===
+│   │   ├── auth/                    // Módulo de Autenticación: Registro, login y gestión de sesiones.
+│   │   │   ├── auth.controller.js   // (Capa HTTP) Maneja las peticiones para /login, /register, /reset-password. Llama al servicio.
+│   │   │   ├── auth.service.js      // (Capa de Lógica) Lógica de negocio pura: hashea contraseñas, genera y verifica JWTs.
+│   │   │   ├── auth.repository.js   // (Capa de Datos) Interactúa con `users.index.json` para encontrar y crear usuarios.
+│   │   │   ├── auth.routes.js       // Define las rutas públicas de este módulo: POST /api/auth/login.
+│   │   │   └── auth.dto.js          // Define la forma esperada de los datos (Data Transfer Objects) para validación.
+│   │   │
+│   │   ├── users/                   // Módulo de Perfil de Usuario: Configuraciones y datos personales.
+│   │   │   ├── users.controller.js  // (Capa HTTP) Maneja peticiones para /users/me (mi perfil), /users/me/settings.
+│   │   │   ├── users.service.js     // (Capa de Lógica) Lógica para actualizar perfil, cambiar contraseña, obtener estadísticas.
+│   │   │   ├── users.repository.js  // (Capa de Datos) Lee y escribe en los archivos de perfil de `user-data/{userId}/`.
+│   │   │   └── users.routes.js      // Define las rutas protegidas para la gestión del usuario: GET /api/users/me.
+│   │   │
+│   │   ├── documents/               // Módulo de Documentos: Subida, procesamiento y gestión de textos.
+│   │   │   ├── documents.controller.js // (Capa HTTP) Maneja la subida de archivos y la obtención de documentos.
+│   │   │   ├── documents.service.js    // (Capa de Lógica) Orquesta la subida, el parseo y el guardado del documento.
+│   │   │   ├── documents.repository.js // (Capa de Datos) Guarda los archivos de texto procesados en `user-data/{userId}/documents/`.
+│   │   │   ├── documents.routes.js     // Define las rutas: POST /api/documents/upload, GET /api/documents.
+│   │   │   └── parsers/              // Lógica y librerías para procesar diferentes tipos de archivos.
+│   │   │       ├── pdf.parser.js       // Usa `pdf-parse` para extraer texto de archivos PDF.
+│   │   │       ├── docx.parser.js      // Usa `mammoth` para convertir .docx a texto.
+│   │   │       └── image.ocr.js        // Usa `tesseract.js` para hacer OCR a imágenes.
+│   │   │
+│   │   ├── lexicon/                 // Módulo de Léxico Personal: Gestión del vocabulario del usuario.
+│   │   │   ├── lexicon.controller.js// (Capa HTTP) Maneja peticiones para añadir/actualizar/borrar palabras.
+│   │   │   ├── lexicon.service.js   // (Capa de Lógica) Aplica reglas de negocio al léxico del usuario.
+│   │   │   ├── lexicon.repository.js// (Capa de Datos) Lee y escribe en `user-data/{userId}/lexicon.json`.
+│   │   │   └── lexicon.routes.js    // Define las rutas: GET /api/lexicon, POST /api/lexicon.
+│   │   │
+│   │   ├── learning/                // Módulo de Juegos y Aprendizaje: Lógica para flashcards, rachas, etc.
+│   │   │   ├── learning.controller.js // (Capa HTTP) Maneja peticiones para obtener mazos, responder tarjetas, etc.
+│   │   │   ├── learning.service.js    // (Capa de Lógica) Contiene el algoritmo de Spaced Repetition (SRS), calcula rachas y puntos.
+│   │   │   ├── learning.repository.js // (Capa de Datos) Accede a `learning-progress.json` y al contenido de `shared-content/`.
+│   │   │   └── learning.routes.js     // Define las rutas: GET /api/learning/decks, POST /api/learning/flashcards/answer.
+│   │   │
+│   │   ├── chat/                    // Módulo de Chat: Comunicación en tiempo real.
+│   │   │   ├── chat.gateway.js      // (Capa de WebSocket) Lógica de Socket.IO para enviar y recibir mensajes en tiempo real.
+│   │   │   ├── chat.service.js      // (Capa de Lógica) Gestiona la creación de salas, historial, usuarios online.
+│   │   │   └── chat.repository.js   // (Capa de Datos) Guarda el historial de mensajes en archivos.
+│   │   │
+│   │   └── payments/                // Módulo de Pagos: Integración con Stripe para suscripciones.
+│   │       ├── payments.controller.js // (Capa HTTP) Crea las sesiones de pago para el checkout.
+│   │       ├── payments.service.js    // (Capa de Lógica) Llama al cliente de Stripe e interpreta los planes de suscripción.
+│   │       ├── payments.webhook.js  // (Capa HTTP) Controlador especial para recibir notificaciones de Stripe (pago exitoso).
+│   │       └── payments.routes.js     // Define las rutas: POST /api/payments/create-checkout.
+│   │
+│   └── shared/                      // === CÓDIGO Y CONFIGURACIONES TRANSVERSALES A TODA LA APLICACIÓN ===
+│       ├── clients/                 // Clientes para hablar con APIs externas de terceros. Abstraen la complejidad.
+│       │   ├── aws-s3.client.js       // (Futuro) Funciones para hablar con Amazon S3 para almacenamiento de archivos.
+│       │   ├── stripe.client.js       // Configuración y funciones para hablar con la API de Stripe.
+│       │   └── email.client.js        // Funciones para enviar emails transaccionales (bienvenida, reseteo) con SendGrid.
+│       ├── config/                  // Carga y valida las variables de entorno del archivo .env.
+│       │   └── index.js             // Carga el archivo .env y exporta un objeto de configuración global y validado.
+│       ├── middleware/              // Middleware reutilizable para las rutas de Express.
+│       │   ├── verify-token.middleware.js     // Verifica que el JWT de la cabecera sea válido y añade el usuario a `req`.
+│       │   └── check-role.middleware.js       // Verifica si el usuario tiene un rol específico para proteger rutas y funcionalidades.
+│       ├── nlp/                     // Librería interna de Procesamiento de Lenguaje Natural.
+│       │   └── nlp.service.js       // Importa y configura una librería como `natural` y expone funciones (`lemmatize`, `tokenize`).
+│       ├── persistence/             // Capa de abstracción de bajo nivel para el acceso a datos.
+│       │   └── file-system.adapter.js // Un adaptador genérico con funciones `readFile(path)` y `writeFile(path, data)`.
+│       ├── websockets/              // Configuración del servidor de WebSockets.
+│       │   └── socket.initializer.js // Configura Socket.IO y lo adjunta al servidor Express para el chat.
+│       └── utils/                   // Funciones de ayuda genéricas.
+│           └── logger.js              // Un sistema de logging centralizado para registrar eventos y errores.
+│
+├── tests/                         // === CARPETA PARA PRUEBAS AUTOMATIZADAS ===
+│   ├── integration/                 // Pruebas que simulan peticiones HTTP a tu API y verifican la respuesta.
+│   └── unit/                        // Pruebas para tu lógica de negocio pura (servicios) de forma aislada.
+│
+├── .env                             // Variables de entorno (¡NUNCA subir a Git!). Claves de API, secretos de JWT, etc.
+├── .gitignore                       // Especifica qué archivos y carpetas ignorar en Git (ej. node_modules, .env).
+├── package.json                     // Define el proyecto, sus dependencias y scripts.
+└── server.js                        // Punto de entrada principal. Inicia Express, une los routers de todos los módulos y arranca el servidor.
+
+
+frontend/
+├── assets/                  // Contenedor para todos los recursos visuales y estáticos.
+│   ├── images/              // Todos los iconos e imágenes (.png, .svg, .jpg).
+│   └── fonts/               // (Opcional) Fuentes personalizadas si las usas.
+│
+├── pages/                   // === CADA PÁGINA O SECCIÓN PRINCIPAL DE TU WEB ===
+│   ├── landing.html         // Página de bienvenida y marketing para nuevos usuarios.
+│   ├── authentication.html  // Página con formularios de Login y Registro.
+│   ├── workspace-reader.html// El corazón de la aplicación, donde el usuario lee y aprende.
+│   ├── user-profile.html    // Página para que el usuario edite su perfil, contraseña y configuración.
+│   ├── learning-hub.html    // Un "hub" donde el usuario elige cómo quiere estudiar (Flashcards, etc.).
+│   ├── game-flashcards.html // La página específica para el juego de Flashcards.
+│   └── community-chat.html  // La futura página para el chat entre usuarios.
+│
+├── src/                     // === TODO TU CÓDIGO FUENTE DE JAVASCRIPT ===
+│   ├── components/          // Lógica de cada "pieza de LEGO" de tu interfaz, son reutilizables.
+│   │   ├── Reader/
+│   │   │   └── reader.component.js           // Lógica del componente principal de lectura.
+│   │   ├── Library/
+│   │   │   └── library.component.js          // Lógica del panel de la biblioteca.
+│   │   ├── WordBubble/
+│   │   │   └── word-bubble.component.js      // Lógica de la burbuja de información.
+│   │   ├── MainMenu/
+│   │   │   └── main-menu.component.js        // Lógica del menú principal de navegación.
+│   │   ├── UserProfileForm/
+│   │   │   └── user-profile-form.component.js// Lógica del formulario de perfil de usuario.
+│   │   └── FlashcardGame/
+│   │       └── flashcard-game.component.js   // Lógica del juego de tarjetas de memoria.
+│   │
+│   ├── pages/               // Orquestadores: El "pegamento" que inicializa los componentes para cada página HTML.
+│   │   ├── workspace-reader.page.loader.js // Carga e inicializa Reader, Library, WordBubble.
+│   │   ├── user-profile.page.loader.js     // Carga e inicializa UserProfileForm.
+│   │   └── authentication.page.loader.js   // Maneja la lógica para mostrar el form de login o registro en authentication.html.
+│   │
+│   ├── state/               // El "Cerebro" Central: Gestiona todos los datos de la aplicación.
+│   │   ├── user-session.state.js       // Gestiona los datos del usuario logueado (token, perfil, rol).
+│   │   ├── lexicon.state.js            // Gestiona la lista de palabras y frases del usuario (el vocabulario).
+│   │   ├── documents.state.js          // Gestiona la lista de documentos del usuario.
+│   │   └── user-settings.state.js      // Gestiona y persiste en localStorage las configuraciones del cliente (tema, zoom, etc.).
+│   │
+│   ├── services/            // "Carteros": Capa de abstracción para comunicarse con el mundo exterior.
+│   │   ├── backend-api.service.js      // Centraliza todas las llamadas `fetch` a tu propio backend. ÚNICO lugar que conoce las URLs de tu API.
+│   │   └── external-apis.service.js    // Centraliza las llamadas a APIs de terceros (traducción, diccionario, IA).
+│   │
+│   ├── modules/                 // === Módulos para Lógica Global y Funcionalidades Transversales ===
+│   │   ├── notifications/
+│   │   │   └── toast.handler.js          // Lógica para mostrar y ocultar notificaciones (toasts) en toda la web.
+│   │   ├── error-handling/
+│   │   │   └── global-error.handler.js   // Captura errores de JavaScript no controlados para evitar que la web se rompa.
+│   │   ├── text-highlighter/
+│   │   │   └── selection-highlighter.js  // Lógica reutilizable del resaltado visual azul al seleccionar texto.
+│   │   └── theme/
+│   │       └── theme.manager.js          // Lógica para aplicar y cambiar el modo oscuro/claro en toda la web.
+│   │
+│   ├── i18n/                    // Módulo de Internacionalización para el cambio de idioma de la interfaz.
+│   │   ├── language-detector.js   // Detecta el idioma del navegador del usuario la primera vez que visita.
+│   │   ├── translation.service.js   // Servicio principal que carga y provee las traducciones (ej. t('titulo_biblioteca')).
+│   │   └── locales/
+│   │       ├── en.json              // Archivo con todas las cadenas de texto en Inglés.
+│   │       └── es.json              // Archivo con todas las cadenas de texto en Español.
+│   │
+│   ├── core/                // El Núcleo de la Aplicación. Orquesta el arranque y la comunicación.
+│   │   ├── dom-elements.js        // Un único lugar para definir todos los selectores del DOM (`getElementById`).
+│   │   ├── app.initializer.js     // El primer y único script que se carga en el HTML. Decide qué ".page.loader.js" ejecutar.
+│   │   └── event-bus.js           // Sistema de notificaciones (Publish/Subscribe) para que los módulos se comuniquen sin acoplarse.
+│   │
+│   └── utils/               // Caja de herramientas con funciones genéricas y reutilizables.
+│       ├── text-processor.js        // Tu lógica de PNL (tokenizar, lematizar) para el cliente.
+│       ├── dom-manipulator.js       // Funciones de ayuda para crear y modificar elementos del DOM de forma segura.
+│       └── debouncer.js             // Función para evitar peticiones excesivas (ej. en la barra de búsqueda).
+│
+└── styles/                  // === CARPETA ÚNICA PARA TODO EL CSS (Metodología ITCSS) ===
+    ├── 1-settings/
+    │   └── _variables.css         // Variables de color, espaciado, fuentes, etc.
+    ├── 2-tools/
+    │   └── _mixins.placeholder.css// (Para futuro uso con pre-procesadores como Sass).
+    ├── 3-generic/
+    │   └── _reset.css             // Resetea los estilos por defecto del navegador para consistencia.
+    ├── 4-elements/
+    │   └── _html-and-body.css     // Estilos base para etiquetas HTML (body, h1, p, a).
+    ├── 5-objects/
+    │   ├── _layout.css            // Estilos para la estructura principal (ej. l-app).
+    │   └── _panel.css             // Estilo reutilizable del objeto "panel".
+    ├── 6-components/              // La capa más grande. Un archivo por cada componente visual.
+    │   ├── _button.css            // Estilos para c-btn y sus modificadores.
+    │   ├── _reader.css            // Estilos para el componente c-reader.
+    │   ├── _word-bubble.css       // Estilos para el componente c-word-bubble.
+    │   ├── _library.css           // Estilos para el componente c-library.
+    │   ├── _toast.css             // Estilos para las notificaciones (toasts).
+    │   └── _highlighter.css       // Estilos para el resaltado de texto.
+    └── 7-utilities/
+    │   └── _spacing-helpers.css   // Clases de utilidad como u-margin-bottom-8, u-text-center.
+    └── main.css                 // El único archivo CSS que se enlaza en el HTML. Importa todos los demás en el orden correcto.

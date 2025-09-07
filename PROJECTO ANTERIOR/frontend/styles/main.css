@@ -1,0 +1,33 @@
+/*
+  Archivo: frontend/styles/main.css
+  Propósito: Punto de entrada principal para todos los estilos del proyecto.
+*/
+
+/* 1. Settings: Variables globales, fuentes, etc. */
+@import url('./1-settings/_variables.css');
+
+/* 2. Tools: Mixins y funciones (si los hubiera) */
+
+/* 3. Generic: Reseteo de estilos del navegador. */
+@import url('./3-generic/_reset.css');
+
+/* 4. Elements: Estilos base para etiquetas HTML (body, h1, a, etc.). */
+@import url('./4-elements/_html-and-body.css');
+
+/* 5. Objects: Clases de layout no decorativas (contenedores, grid, etc.). */
+@import url('./5-objects/_layout.css');
+@import url('./5-objects/_panel.css');
+
+/* 6. Components: Estilos para componentes específicos de la UI. */
+@import url('./6-components/_button.css');
+@import url('./6-components/_forms.css');
+@import url('./6-components/_doc-card.css');
+@import url('./6-components/_reader.css');
+@import url('./6-components/_lexicon-table.css');
+@import url('./6-components/_word-bubble.css');
+@import url('./6-components/_toast.css');
+@import url('./6-components/_main-menu.css');
+@import url('./6-components/_side-toolbar.css');
+
+/* 7. Utilities: Clases de ayuda para sobreescribir estilos (ej. .u-mb-8). */
+@import url('./7-utilities/_utilities.css');

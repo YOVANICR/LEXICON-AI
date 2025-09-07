@@ -18,7 +18,8 @@ const ReaderComponent = (function () {
     reader_container.innerHTML = '';
     
     if (!documentObject || typeof documentObject.text !== 'string') {
-      reader_container.innerHTML = '<p class="u-text-muted">Selecciona un documento de tu biblioteca para empezar a leer.</p>';
+      // MODIFICADO: Se usa el servicio de traducción
+      reader_container.innerHTML = `<p class="u-text-muted">${TranslationService.t('reader_no_document_selected')}</p>`;
       DOM_ELEMENTS.currentDocumentTitle.textContent = 'Sin documento';
       return;
     }
@@ -81,25 +82,27 @@ const ReaderComponent = (function () {
       }
     });
   }
-function handleReaderClick(event) {
-    const clicked_word_element = event.target.closest('.c-reader__word');
-    if (clicked_word_element && clicked_word_element.dataset.lemma) {
-      const lemma = clicked_word_element.dataset.lemma;
-      const surfaceForm = clicked_word_element.textContent;
-      WordBubbleComponent.showBubbleForWord(lemma, surfaceForm, clicked_word_element);
-    }
-  }
 
-
-/**
+  /**
    * Activa o desactiva los estilos visuales para el modo de lectura focalizada.
    */
-    function applyFocusModeVisuals(eventData) {
+  function applyFocusModeVisuals(eventData) {
     const is_active = eventData.isActive;
     DOM_ELEMENTS.readerContainer.classList.toggle('focus-mode-active', is_active);
     console.log(`Componente Lector: Modo Focalizado ${is_active ? 'activado' : 'desactivado'}.`);
   }
 
+  /**
+   * @private
+   * Actualiza los textos de este componente. En este caso, solo vuelve a renderizar
+   * el estado inicial por si el mensaje de "no hay documento" necesita ser traducido.
+   */
+  function translateComponent() {
+    // Solo renderizar si no hay un documento activo
+    if (DOM_ELEMENTS.readerContainer.querySelector('.c-reader__word') === null) {
+      renderDocumentContent(null);
+    }
+  }
 
   function initialize() {
     try {
@@ -110,6 +113,9 @@ function handleReaderClick(event) {
       
       renderDocumentContent(null);
       
+      // --- NUEVA LÓGICA DE TRADUCCIÓN ---
+      EventBus.subscribe('language:changed', translateComponent);
+
       console.log('Componente Lector inicializado.');
     } catch (error) {
       console.error('Error al inicializar el componente Lector.', error);

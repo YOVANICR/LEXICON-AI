@@ -19,7 +19,8 @@ const LibraryComponent = (function () {
     listContainer.innerHTML = '';
     
     if (!documents || documents.length === 0) {
-      listContainer.innerHTML = '<p>No hay documentos en tu biblioteca.</p>';
+      // MODIFICADO: Se usa el servicio de traducción
+      listContainer.innerHTML = `<p>${TranslationService.t('library_empty_message')}</p>`;
       return;
     }
 
@@ -74,6 +75,22 @@ const LibraryComponent = (function () {
   }
 
   /**
+   * @private
+   * Actualiza todos los textos de este componente que dependen del idioma.
+   */
+  function translateComponent() {
+    if (DOM_ELEMENTS.documentTitleInput) {
+      DOM_ELEMENTS.documentTitleInput.placeholder = TranslationService.t('document_title_placeholder');
+    }
+    if (DOM_ELEMENTS.documentTextInput) {
+      DOM_ELEMENTS.documentTextInput.placeholder = TranslationService.t('document_text_placeholder');
+    }
+    if (DOM_ELEMENTS.addDocumentButton) {
+      DOM_ELEMENTS.addDocumentButton.textContent = TranslationService.t('add_document_button');
+    }
+  }
+
+  /**
    * Inicializa el componente de la Biblioteca.
    */
   function initialize() {
@@ -85,6 +102,10 @@ const LibraryComponent = (function () {
       DOM_ELEMENTS.addDocumentButton.addEventListener('click', handleAddDocumentClick);
       // Añadimos un único listener al CONTENEDOR. Esto es más eficiente que añadir uno por cada tarjeta.
       DOM_ELEMENTS.documentsListContainer.addEventListener('click', handleDocumentListClick);
+
+      // --- NUEVA LÓGICA DE TRADUCCIÓN ---
+      EventBus.subscribe('language:changed', translateComponent);
+      translateComponent(); // Traducir al cargar por primera vez
 
       console.log('Componente de Biblioteca inicializado.');
     } catch (error)
