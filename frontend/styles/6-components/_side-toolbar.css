@@ -88,3 +88,22 @@ body.dark .c-side-toolbar__btn img {
   margin: 0;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
+/* --- NUEVO: Estilos para la barra de herramientas contextual (versión corregida) --- */
+.c-contextual-toolbar {
+  overflow: hidden; /* Necesario para que la animación de max-height funcione */
+  max-height: 0; /* Por defecto, no ocupa espacio en el layout */
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0; /* La hacemos invisible para una transición suave */
+  border-top: 1px solid transparent; /* Borde que aparecerá con la animación */
+  transition: all 0.35s ease-in-out;
+}
+
+/* Clase que se añadirá con JS para mostrar la barra */
+.c-contextual-toolbar.is-visible {
+  max-height: 50px; /* Expande la altura para mostrar el contenido */
+  opacity: 1; /* La hace visible */
+  padding-top: 8px; /* Restaura el espaciado vertical */
+  padding-bottom: 8px;
+  
+}

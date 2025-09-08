@@ -45,6 +45,7 @@
     '../src/components/MainMenu/main-menu.component.js',
     '../src/components/UserProfileForm/user-profile-form.component.js',
     '../src/components/WorkspaceLayout/workspace-layout.component.js',
+    '../src/components/UploaderPanel/uploader-panel.component.js',
     // Page Loader
     '../src/pages/workspace-reader.page.loader.js'
   ];
@@ -125,6 +126,7 @@
       } else {
         console.warn('UITranslator no está disponible o no tiene método initialize().');
       }
+      
 
       // 5. Proceder a inicializar la lógica de la página actual.
       initializeCurrentPageModule();

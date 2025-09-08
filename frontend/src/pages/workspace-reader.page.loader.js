@@ -25,6 +25,7 @@ const WorkspaceReaderPageLoader = (function () {
       LexiconTableComponent.initialize();
       WordBubbleComponent.initialize();
       MainMenuComponent.initialize();
+      UploaderPanelComponent.initialize();
 
       // ==================================================================
       // CORRECCIÓN: AÑADIMOS LA LLAMADA PARA INICIALIZAR EL LAYOUT

@@ -113,6 +113,9 @@ const WorkspaceLayoutManager = (function () {
       try {
         const clickedButton = event.currentTarget;
         const viewIdToShow = clickedButton.dataset.view;
+        //                 AQUÍ ESTÁ EL CAMBIO
+        //                     ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+        const contextualToolbar = document.getElementById('leftPanelToolbarTwo'); // <-- MODIFICADO
 
         if (panel.classList.contains('is-collapsed')) {
           panel.classList.remove('is-collapsed');
@@ -122,14 +125,22 @@ const WorkspaceLayoutManager = (function () {
           clickedButton.classList.remove('is-active');
           views.forEach(view => view.classList.add('is-hidden'));
           if (panelTitle) panelTitle.textContent = '';
+          if (contextualToolbar) contextualToolbar.classList.remove('is-visible'); // <-- MODIFICADO
           return;
         }
 
         showView(viewIdToShow, clickedButton);
+        
+        if (contextualToolbar) { // <-- MODIFICADO
+          if (viewIdToShow === 'libraryView') {
+            contextualToolbar.classList.add('is-visible'); // <-- MODIFICADO
+          } else {
+            contextualToolbar.classList.remove('is-visible'); // <-- MODIFICADO
+          }
+        }
 
       } catch (error) {
         console.error(`Error al cambiar de vista en ${panelId}:`, error);
-        // MODIFICADO: Se usa clave de traducción
         ToastHandler.showToast(TranslationService.t('toast_view_change_error'));
       }
     }
