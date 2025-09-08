@@ -1,0 +1,18 @@
+/*
+  Archivo: frontend/styles/6-components/_toast.css
+  Propósito: Estilos para el componente de notificación flotante (c-toast).
+*/
+
+.c-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  font-weight: 700;
+  display: none;
+  z-index: 10000;
+}

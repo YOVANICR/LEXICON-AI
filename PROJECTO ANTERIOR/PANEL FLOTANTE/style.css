@@ -1,0 +1,375 @@
+/* ==========================================================================
+   1. Variables y Diseño Base (Setup)
+   ========================================================================== */
+:root {
+  /* Colores */
+  --brand: hsl(220, 80%, 55%);
+  --brand-light: hsl(220, 80%, 92%);
+  --brand-hover: hsl(220, 80%, 45%);
+  --bg: hsl(210, 15%, 96%);
+  --surface: hsl(0, 0%, 100%);
+  --line: hsl(210, 10%, 90%);
+  --dashed-line: hsl(210, 8%, 85%);
+  --text: hsl(210, 20%, 20%);
+  --text-muted: hsl(210, 10%, 45%);
+  --text-subtle: hsl(210, 8%, 65%);
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  /* Tipografía */
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Poppins', system-ui, sans-serif;
+
+  /* Anillo de enfoque */
+  --focus-ring: 0 0 0 4px color-mix(in srgb, var(--brand) 30%, transparent);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2rem;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. Bloque: Contenido Principal y Botón Genérico
+   ========================================================================== */
+.main-content {
+  text-align: center;
+}
+.main-content__title {
+  font-family: var(--font-heading);
+}
+.button {
+  min-width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  background: var(--surface);
+  border: 1px solid var(--line); 
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .2s ease;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-muted);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+.button:hover {
+  background: var(--brand-light);
+  border-color: var(--brand);
+  color: var(--brand-hover);
+  box-shadow: var(--shadow-md);
+}
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* ==========================================================================
+   3. Bloque: Panel de Carga (uploader)
+   ========================================================================== */
+.uploader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 40, 0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.35s ease-out, visibility 0.35s ease-out;
+}
+.uploader--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.uploader__content {
+  background: var(--surface);
+  padding: 24px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  width: 90%;
+  max-width: 900px; 
+  transform: scale(0.98) translateY(20px);
+  transition: transform 0.35s ease-out, opacity 0.35s ease-out;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  /* CAMBIO: Fuerza al panel a ser un cuadrado perfecto */
+  aspect-ratio: 1 / 1; 
+}
+.uploader:not(.uploader--hidden) .uploader__content {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.uploader__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  margin-bottom: 24px; 
+  flex-shrink: 0;
+}
+
+.uploader__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.uploader__logo {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--brand);
+  color: white;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.uploader__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
+  /* La altura mínima ya no es necesaria, el aspect-ratio del padre controla las dimensiones */
+}
+
+.uploader__main-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.uploader__paste-view {
+  display: none;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.uploader__body--paste-mode .uploader__main-view {
+  display: none;
+}
+.uploader__body--paste-mode .uploader__paste-view {
+  display: flex;
+}
+
+.uploader__main-dropzone {
+  border: 1px dashed var(--dashed-line); 
+  border-radius: 16px;
+  padding: 30px 20px; 
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.uploader__main-dropzone:hover {
+  border: 1px solid var(--brand); 
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.uploader__title {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  margin: 0 0 10px 0;
+}
+.uploader__prompt {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.uploader__link {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.uploader__link:hover {
+  color: var(--brand-hover);
+  text-decoration: underline;
+}
+.uploader__file-types {
+  font-size: 14px;
+  color: var(--text-subtle);
+  margin-top: 8px;
+}
+
+.uploader__source-options {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+}
+
+.uploader__source-column {
+  flex: 1;
+  min-width: 0;
+  padding: 20px;
+  border: 1px dashed var(--dashed-line); 
+  border-radius: 16px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+.uploader__source-column:hover {
+  border: 1px solid var(--brand); 
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.uploader__source-column--compact {
+  flex: 0.5;
+}
+
+.uploader__source-title {
+  font-family: var(--font-heading);
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0 0 16px 0;
+}
+
+.uploader__source-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.uploader__source-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+.uploader__source-column:hover .uploader__source-button:hover {
+  background: var(--brand-light);
+  color: var(--brand-hover);
+  transform: translateX(4px);
+}
+
+.uploader__button-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.paste-textarea__container {
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    background: var(--surface);
+    border: 1px dashed var(--dashed-line);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+.paste-textarea__container:focus-within {
+    border-style: solid;
+    border-color: var(--brand);
+    box-shadow: var(--focus-ring);
+}
+
+.paste-textarea {
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+    padding-right: 60px;
+    border: none;
+    border-radius: 16px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--text);
+    background: transparent;
+    resize: none;
+    outline: none;
+}
+.paste-textarea::placeholder {
+    color: var(--text-subtle);
+}
+
+.button--send-icon {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--brand);
+    border: none;
+    box-shadow: var(--shadow-md);
+}
+
+.button--send-icon:hover {
+    background-color: var(--brand-hover);
+    transform: scale(1.05);
+}
+
+.button--send-icon img {
+    width: 22px;
+    height: 22px;
+}
+
+/* ==========================================================================
+   5. Media Queries para Responsividad
+   ========================================================================== */
+@media (max-width: 960px) {
+    /* En pantallas más pequeñas, se mantendrá cuadrado pero se encogerá */
+    .uploader__content {
+        width: 90vw; /* Usa el ancho de la ventana como referencia */
+        height: 90vw; /* Y la altura será igual para mantener el aspect-ratio */
+        max-width: 90vw;
+        max-height: 90vh;
+    }
+    .uploader__title {
+        font-size: 22px;
+    }
+}
+@media (max-width: 768px) {
+    .uploader__source-options {
+        flex-direction: column;
+    }
+    .uploader__source-column {
+        min-width: unset;
+        width: 100%;
+    }
+    .uploader__source-column--compact {
+        flex: 1; 
+    }
+}

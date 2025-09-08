@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Carga Profesional</title>
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <main class="main-content">
+    <h1 class="main-content__title">Demostración del Panel de Carga</h1>
+    <p class="main-content__description">Haz clic en el botón para abrir el panel modal.</p>
+    <button id="openUploaderButton" class="button" aria-label="Abrir panel de carga">
+      Abrir Panel
+    </button>
+  </main>
+
+  <div id="uploaderOverlay" class="uploader uploader--hidden" role="dialog" aria-modal="true" aria-labelledby="uploaderTitle">
+    
+    <div class="uploader__content">
+      <header class="uploader__header">
+        <div class="uploader__brand">
+          <div class="uploader__logo">λ</div>
+          <span>LEXICON AI</span>
+        </div>
+      </header>
+  
+      <div id="uploaderBody" class="uploader__body">
+        
+        <div class="uploader__main-view">
+          <div class="uploader__main-dropzone">
+            <h2 id="uploaderTitle" class="uploader__title">Subir fuentes</h2>
+            <p class="uploader__prompt">Arrastra y suelta o <a class="uploader__link">selecciona un archivo</a> para subirlo</p>
+            <p class="uploader__file-types">Tipos de archivo admitidos: Pdf, Docx, Txt, Mp3, Mp4, Video Youtube</p>
+          </div>
+          
+          <div class="uploader__source-options">
+            <div class="uploader__source-column">
+              <h3 class="uploader__source-title">Documentos</h3>
+              <div class="uploader__source-buttons">
+                <button class="uploader__source-button"><img src="compartirInactivo.svg" alt="" class="uploader__button-icon"> Documentos compartidos</button>
+                <button class="uploader__source-button"><img src="carpeta-abiertaInactiva.svg" alt="" class="uploader__button-icon"> Abrir un archivo local</button>
+              </div>
+            </div>
+            <div class="uploader__source-column uploader__source-column--compact">
+              <h3 class="uploader__source-title">Pegar</h3>
+              <div class="uploader__source-buttons">
+                <button id="switchToPasteViewButton" class="uploader__source-button"><img src="pegarInactivo.svg" alt="" class="uploader__button-icon"> Pegar texto</button>
+              </div>
+            </div>
+            <div class="uploader__source-column">
+              <h3 class="uploader__source-title">Archivos multimedia</h3>
+              <div class="uploader__source-buttons">
+                <button class="uploader__source-button"><img src="youtube.svg" alt="" class="uploader__button-icon"> YouTube</button>
+                <button class="uploader__source-button"><img src="foto-video.svg" alt="" class="uploader__button-icon"> Audio o video Local</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="uploader__paste-view">
+          <div class="paste-textarea__container">
+            <textarea id="pasteTextArea" class="paste-textarea" placeholder="Escribe o pega tu texto aquí..."></textarea>
+            <button id="sendPastedTextButton" class="button button--send-icon" aria-label="Enviar texto">
+              <img src="avion-de-papelactivo.svg" alt="Enviar">
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

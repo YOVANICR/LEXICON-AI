@@ -1,0 +1,50 @@
+/*
+  Archivo: frontend/styles/6-components/_reader.css
+  Propósito: Contiene todos los estilos para el componente Lector, incluyendo su barra
+             de herramientas, el área de texto, los filtros y la leyenda.
+*/
+
+.c-reader-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Permite que los elementos se apilen en pantallas pequeñas */
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line); 
+}
+
+.c-reader-toolbar__group {
+  display: flex;
+  gap: 12px; 
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.c-reader {
+  position: relative;
+  /* Se eliminan las siguientes 4 líneas para expandir el área */
+  /* border: 1px solid var(--line); */
+  /* border-radius: 12px; */
+  /* padding: 14px; */
+  /* background: var(--card); */
+  
+  line-height: 1.7;
+  font-size: 18px;
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+
+.c-reader__word:hover {
+  background: #eef6ff;
+}
+
+.c-legend {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+}

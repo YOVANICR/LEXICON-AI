@@ -1,0 +1,245 @@
+/* ==========================================================================
+   Componente: Uploader de la Biblioteca (c-library-uploader)
+   ========================================================================== */
+
+.c-library-uploader {
+  /* Contenedor principal que vive dentro de la vista de la biblioteca */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem; /* Un poco de espacio interior */
+  background-color: var(--surface);
+}
+
+.c-library-uploader__content {
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--line);
+  padding: 24px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.c-library-uploader__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.c-library-uploader__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading, sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.c-library-uploader__logo {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--brand);
+  color: white;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.c-library-uploader__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.c-library-uploader__main-view,
+.c-library-uploader__paste-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 20px;
+}
+
+.c-library-uploader__paste-view {
+  display: none;
+}
+
+.c-library-uploader__body--paste-mode .c-library-uploader__main-view {
+  display: none;
+}
+
+.c-library-uploader__body--paste-mode .c-library-uploader__paste-view {
+  display: flex;
+}
+
+.c-library-uploader__main-dropzone {
+  border: 1px dashed var(--dashed-line);
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.c-library-uploader__main-dropzone:hover {
+  border-style: solid;
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.c-library-uploader__title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 24px;
+  margin: 0 0 10px 0;
+}
+
+.c-library-uploader__prompt {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.c-library-uploader__link {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.c-library-uploader__file-types {
+  font-size: 14px;
+  color: var(--text-subtle);
+  margin-top: 8px;
+}
+
+.c-library-uploader__source-options {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.c-library-uploader__source-column {
+  flex: 1;
+  min-width: 0;
+  padding: 20px;
+  border: 1px dashed var(--dashed-line);
+  border-radius: 16px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.c-library-uploader__source-column:hover {
+  border-style: solid;
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.c-library-uploader__source-column--compact {
+  flex: 0.7;
+}
+
+.c-library-uploader__source-title {
+  font-family: var(--font-heading, sans-serif);
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0 0 16px 0;
+}
+
+.c-library-uploader__source-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.c-library-uploader__source-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.c-library-uploader__source-column:hover .c-library-uploader__source-button:hover {
+  background: var(--brand-light);
+  color: var(--brand-hover);
+  transform: translateX(4px);
+}
+
+.c-library-uploader__button-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* --- Estilos para la vista de pegar texto --- */
+.paste-textarea__container {
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  background: var(--surface);
+  border: 1px dashed var(--dashed-line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.paste-textarea__container:focus-within {
+  border-style: solid;
+  border-color: var(--brand);
+  box-shadow: var(--focus-ring);
+}
+
+.paste-textarea {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  padding-right: 60px;
+  border: none;
+  border-radius: 16px;
+  font-family: var(--font-body, sans-serif);
+  font-size: 16px;
+  color: var(--text);
+  background: transparent;
+  resize: none;
+  outline: none;
+}
+
+.c-contextual-actions {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0; /* O el color de borde que uses */
+}
+
+/* Estilo para el modo oscuro */
+.dark .c-contextual-actions {
+  border-bottom: 1px solid #3a3a3a; /* Un color de borde para el tema oscuro */
+}
+
+/* Ocultar la sección cuando tenga la clase is-hidden */
+.c-contextual-actions.is-hidden {
+    display: none;
+}

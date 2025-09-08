@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Carga de Archivos</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ======= CSS: Diseño base y variables de color ======= */
+    :root {
+      /* Colores de marca y acento - Ajustados para un aspecto más sofisticado */
+      --brand-h: 220; /* Tono (Hue) de un azul-violeta */
+      --brand-s: 80%; /* Saturación */
+      --brand-l: 55%; /* Luminosidad */
+      --brand: hsl(var(--brand-h) var(--brand-s) var(--brand-l));
+      --brand-light: hsl(var(--brand-h) var(--brand-s) 92%); /* Versión más clara para fondos */
+      --brand-hover: hsl(var(--brand-h) var(--brand-s) 45%); /* Versión más oscura para hover */
+
+      /* Colores de fondo y superficie - Tonos de gris suaves */
+      --bg: hsl(210 15% 96%);     /* Fondo principal, un gris muy claro */
+      --surface: hsl(0 0% 100%);  /* Superficie de elementos, blanco puro */
+      --panel: hsl(0 0% 100%);    /* Fondo del panel, blanco */
+      --line: hsl(210 10% 90%);   /* Líneas divisorias, gris claro y sutil */
+
+      /* Colores de texto - Para legibilidad y jerarquía */
+      --text: hsl(210 20% 20%);   /* Texto principal, un gris oscuro profundo */
+      --text-muted: hsl(210 10% 45%); /* Texto secundario o descriptivo, gris medio */
+      --text-subtle: hsl(210 8% 65%); /* Texto muy sutil */
+      
+      /* Sombras - Refinadas para un efecto de "elevación" */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+
+      /* Anillo de enfoque (focus-ring) - Más suave y coherente */
+      --ring: 0 0 0 4px color-mix(in srgb, var(--brand) 30%, transparent);
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 2rem;
+      background-color: var(--bg);
+      color: var(--text);
+      /* ✨ Novedad: Tipografía principal 'Inter' para el cuerpo, con Poppins de respaldo */
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6; /* Mejora la legibilidad del texto */
+    }
+    
+    h1, h2, .modal-brand span, .source-title {
+      /* ✨ Novedad: Tipografía 'Poppins' para títulos y elementos destacados */
+      font-family: 'Poppins', 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-weight: 600; /* Un poco más de peso para destacar */
+      color: var(--text);
+    }
+
+    /* ======= CSS: Estilos de botones y logo (mejorados) ======= */
+    .styled-btn {
+      min-width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      background: var(--surface); /* Fondo más claro para los botones */
+      border: 1px solid var(--line);
+      border-radius: 12px; /* Bordes ligeramente más suaves */
+      cursor: pointer;
+      transition: all .2s ease; /* Transición más completa */
+      position: relative;
+      font-size: 15px; /* Un tamaño de fuente ligeramente más pequeño para elegancia */
+      font-weight: 500;
+      color: var(--text-muted); /* Color de texto más suave */
+      box-shadow: var(--shadow-sm); /* Sombra sutil */
+    }
+
+    .styled-btn:hover {
+      background: var(--brand-light); /* Fondo más claro de la marca al hacer hover */
+      border-color: var(--brand); /* Borde con color de marca */
+      color: var(--brand-hover);
+      box-shadow: var(--shadow-md); /* Sombra ligeramente más pronunciada */
+    }
+    
+    .styled-btn.primary { /* Ejemplo de botón primario si lo necesitas */
+        background: var(--brand);
+        color: white;
+        border-color: var(--brand);
+    }
+    .styled-btn.primary:hover {
+        background: var(--brand-hover);
+        border-color: var(--brand-hover);
+        color: white;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--brand);
+      color: white;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm); /* Sombra sutil para el logo */
+    }
+    
+    button {
+        color: inherit;
+        font-family: inherit;
+        -webkit-appearance: none; /* Reset para consistencia en navegadores */
+        -moz-appearance: none;
+        appearance: none;
+    }
+    
+    button:focus-visible {
+        outline: none;
+        box-shadow: var(--ring); /* Anillo de enfoque suave y cohesivo */
+    }
+
+    /* ======= CSS: Estilos del Panel Modal (mejorados) ======= */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(30, 30, 40, 0.65); /* Fondo más oscuro para un mayor contraste */
+      backdrop-filter: blur(6px); /* Mayor desenfoque para efecto "cristal" */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease-out, visibility 0.35s ease-out; /* Transición más suave y ligeramente más larga */
+    }
+
+    .modal-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--panel);
+      padding: 24px; /* Un poco más de padding interior */
+      border-radius: 20px; /* Bordes más pronunciados para un look moderno */
+      box-shadow: var(--shadow-lg); /* Sombra grande y elegante para el modal */
+      width: 90%;
+      max-width: 920px; /* Ancho máximo ligeramente aumentado */
+      transform: scale(0.98) translateY(20px); /* Empieza un poco más pequeño y bajo */
+      transition: transform 0.35s ease-out, opacity 0.35s ease-out; /* Coincide con el overlay */
+      opacity: 0; /* Inicialmente transparente */
+    }
+
+    .modal-overlay.is-open .modal-content {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px; /* Padding ajustado */
+      margin-bottom: 16px; /* Más espacio debajo del header */
+      border-bottom: 1px solid var(--line); /* Línea sutil en la parte inferior */
+      padding-bottom: 16px;
+    }
+
+    .modal-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-brand span {
+      font-size: 22px; /* Tamaño de fuente ligeramente más grande para la marca */
+      font-weight: 700;
+      letter-spacing: 0.8px; /* Un poco de espacio entre letras */
+      color: var(--text);
+    }
+
+    #close-modal-btn {
+      width: 38px; /* Un poco más grande el botón de cierre */
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--text-subtle); /* Color más suave para la 'X' */
+    }
+    
+    #close-modal-btn:hover {
+        background-color: var(--line); /* Fondo sutil al hacer hover */
+        border-color: var(--text-subtle);
+        color: var(--text);
+    }
+
+    .uploader-body {
+      padding: 24px 40px 32px; /* Padding revisado */
+      text-align: center;
+      max-width: 700px; /* ✨ Novedad: Ancho máximo para el contenido central */
+      margin: 0 auto; /* ✨ Novedad: Centra el contenido del cuerpo */
+    }
+
+    .uploader-title {
+      font-size: 28px; /* Título principal más grande y destacado */
+      font-weight: 700;
+      color: var(--text);
+      margin: 20px 0 10px; /* Espaciado ajustado */
+    }
+
+    .upload-prompt {
+      font-size: 16px; /* Tamaño de fuente ligeramente mayor para la prompt */
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .upload-prompt a {
+      color: var(--brand);
+      font-weight: 600; /* Más peso para el enlace */
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .upload-prompt a:hover {
+      color: var(--brand-hover);
+      text-decoration: underline;
+    }
+
+    .file-types {
+      font-size: 14px;
+      color: var(--text-subtle); /* Más sutil el texto de tipos de archivo */
+      margin-top: 8px;
+    }
+
+    .source-options {
+      display: flex;
+      flex-wrap: wrap; 
+      gap: 20px; /* Más espacio entre columnas */
+      margin-top: 32px; /* Más espacio encima de las opciones */
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .source-column {
+      flex: 1;
+      min-width: 260px; /* Ancho mínimo ligeramente mayor para las columnas */
+      text-align: left;
+      padding: 20px; /* Más padding interno */
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm); /* Sombra sutil para cada columna */
+    }
+
+    .source-column:hover {
+      background-color: var(--brand-light); /* Fondo más claro de la marca al hacer hover */
+      border-color: var(--brand);
+      transform: translateY(-2px); /* Pequeño efecto de elevación */
+      box-shadow: var(--shadow-md); /* Sombra más pronunciada al hacer hover */
+    }
+
+    .source-title {
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Centrado del título de la columna */
+      gap: 8px;
+      font-weight: 700; /* Más peso para el título de la columna */
+      font-size: 16px; /* Tamaño de fuente ligeramente mayor */
+      margin-bottom: 16px; /* Más espacio debajo del título */
+      color: var(--text);
+    }
+
+    .source-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Más espacio entre botones */
+    }
+
+    .source-button {
+      display: flex;
+      align-items: center;
+      gap: 12px; /* Más espacio para iconos si se añaden */
+      padding: 12px 16px; /* Más padding para los botones internos */
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      color: var(--text-muted); /* Color de texto más suave */
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .source-column:hover .source-button:hover {
+      background: color-mix(in srgb, var(--brand) 15%, transparent); /* Fondo sutil de la marca al hacer hover */
+      color: var(--brand-hover);
+      transform: translateX(4px); /* Pequeño efecto de deslizamiento */
+    }
+
+    /* Media Queries para responsividad, si el espacio es muy pequeño */
+    @media (max-width: 768px) {
+        .modal-content {
+            padding: 16px;
+        }
+        .uploader-body {
+            padding: 16px 12px 24px;
+        }
+        .uploader-title {
+            font-size: 24px;
+        }
+        .source-options {
+            flex-direction: column; /* Apila las columnas en pantallas pequeñas */
+        }
+        .source-column {
+            min-width: unset; /* Permite que las columnas se ajusten al 100% */
+            width: 100%;
+        }
+    }
+  </style>
+
+</head>
+<body>
+
+  <h1>Demostración del Panel de Carga</h1>
+  <p>Haz clic en el botón para abrir el panel modal.</p>
+  <button id="btn-docs" class="styled-btn" aria-label="Abrir panel de carga">
+    Abrir Panel
+  </button>
+
+  <div id="upload-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <header class="modal-header">
+        <div class="modal-brand">
+          <div class="logo">λ</div>
+          <span>LEXICON AI</span>
+        </div>
+        <button id="close-modal-btn" class="styled-btn" aria-label="Cerrar">
+          X
+        </button>
+      </header>
+  
+      <div class="uploader-body">
+        <h2 class="uploader-title">Subir fuentes</h2>
+  
+        <p class="upload-prompt">Arrastra y suelta o <a>selecciona un archivo</a> para subirlo</p>
+        <p class="file-types">Tipos de archivo admitidos: Pdf, Docx, Txt, Mp3, Mp4, Video Youtube</p>
+        
+        <div class="source-options">
+          <div class="source-column">
+            <div class="source-title">
+              <span>Documentos</span>
+            </div>
+            <div class="source-buttons">
+              <button class="source-button">Documentos compartidos</button>
+              <button class="source-button">Abrir un archivo local</button>
+            </div>
+          </div>
+  
+          <div class="source-column">
+            <div class="source-title">
+              <span>Archivos multimedia</span>
+            </div>
+            <div class="source-buttons">
+              <button class="source-button">YouTube</button>
+              <button class="source-button">Audio o video Local</button>
+            </div>
+          </div>
+  
+          <div class="source-column">
+            <div class="source-title">
+              <span>Pegar texto</span>
+            </div>
+            <div class="source-buttons">
+              <button class="source-button">Texto copiado</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ======= JAVASCRIPT: Lógica para el panel modal =======
+    document.addEventListener('DOMContentLoaded', () => {
+      const openModalBtn = document.getElementById('btn-docs');
+      const closeModalBtn = document.getElementById('close-modal-btn');
+      const modalOverlay = document.getElementById('upload-modal');
+      
+      const openModal = () => {
+        modalOverlay.classList.add('is-open');
+        modalOverlay.setAttribute('aria-hidden', 'false');
+      };
+
+      const closeModal = () => {
+        modalOverlay.classList.remove('is-open');
+        modalOverlay.setAttribute('aria-hidden', 'true');
+      };
+      
+      // Abrir modal con el botón
+      openModalBtn?.addEventListener('click', openModal);
+      
+      // Cerrar modal con el botón de cierre (la 'X')
+      closeModalBtn?.addEventListener('click', closeModal);
+      
+      // Cerrar modal haciendo clic fuera del contenido
+      modalOverlay?.addEventListener('click', (event) => {
+        if (event.target === modalOverlay) {
+          closeModal();
+        }
+      });
+      
+      // Cerrar modal presionando la tecla 'Escape'
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modalOverlay.classList.contains('is-open')) {
+          closeModal();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
