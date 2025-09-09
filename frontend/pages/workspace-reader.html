@@ -17,10 +17,16 @@
                 <header class="l-main-header">
                           <h1 data-i18n-key="app_title">LEXICON AI</h1>
                           <nav class="c-main-menu">
+
                           <button id="btnTheme" class="c-main-menu__btn" title="" data-i18n-key="tooltip_dark_mode" data-i18n-target="title">
                                   <img src="../assets/images/luna-estrellas.svg" alt="Modo oscuro" class="c-main-menu__icon icon-initial">
                                   <img src="../assets/images/sol.svg" alt="Modo claro" class="c-main-menu__icon icon-active">
                           </button>
+                          <button id="btnMusicPlayer" class="c-main-menu__btn" title="Música ambiental">
+                                <img src="../assets/images/auricularesInactivos.svg" alt="Reproducir música" class="c-main-menu__icon icon-initial">
+                                <img src="../assets/images/auricularesActivos.svg" alt="Pausar música" class="c-main-menu__icon icon-active">
+                          </button>
+
 
                           <div class="c-language-selector">
                               <button id="btnLang" class="c-main-menu__btn" title="" data-i18n-key="tooltip_change_language" data-i18n-target="title">
@@ -66,8 +72,8 @@
                                             <hr class="u-separator--vertical" />
 
                                             <button class="c-side-toolbar__btn" title="" data-i18n-key="tooltip_pen" data-i18n-target="title">
-                                                    <img src="../assets/images/boligrafoInactivado.svg" alt="Bolígrafo Inactivo" class="icon-initial">
-                                                    <img src="../assets/images/cepilloActivo.svg" alt="Bolígrafo Activo" class="icon-active">
+                                                    <img src="../assets/images/boligrafoActivado.svg" alt="Bolígrafo Inactivo" class="icon-initial">
+                                                    <img src="../assets/images/boligrafoInactivado.svg" alt="Bolígrafo Activo" class="icon-active">
                                             </button>
 
                                       
@@ -82,41 +88,50 @@
 
                             <div class="c-side-toolbar c-contextual-toolbar" id="leftPanelToolbarTwo" style="padding: 0 12px; min-height: 48px;">
                                   <button class="c-side-toolbar__btn" title="Nuevo Icono 1">
-                                          <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 1" class="icon-initial">
+                                          <img src="../assets/images/taza-caliente-altInactiva.svg" alt="Nuevo Icono 1" class="icon-initial">
                                   </button>
 
                                   <hr class="u-separator--vertical" />
 
                                   <button class="c-side-toolbar__btn" title="Nuevo Icono 2">
-                                          <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 2" class="icon-initial">
+                                          <img src="../assets/images/CandadoInicial.svg" alt="Nuevo Icono 2" class="icon-initial">
                                   </button>
                                   <hr class="u-separator--vertical" />
 
                                   <button id="btnOpenUploader"  class="c-side-toolbar__btn" title="Nuevo Icono 3">
-                                        <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 3" class="icon-initial">
+                                        <img src="../assets/images/AregarDocumentActivo.svg" alt="Nuevo Icono 3" class="icon-initial">
                                   </button>
                                   <hr class="u-separator--vertical" />
 
                                   <button class="c-side-toolbar__btn" title="Nuevo Icono 4">
-                                        <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 4" class="icon-initial">
+                                        <img src="../assets/images/respuesta-alternativaInactivo.svg" alt="Nuevo Icono 4" class="icon-initial">
                                   </button>
                                   <hr class="u-separator--vertical" />
                                   
                                   <button class="c-side-toolbar__btn" title="Nuevo Icono 5">
-                                        <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 5" class="icon-initial">
+                                        <img src="../assets/images/suena-la-campanaInactivo.svg" alt="Nuevo Icono 5" class="icon-initial">
                                   </button>
                             </div>
+                            <hr class="u-separator--horizontal-dotted">
 
                            
 
                             <div id="leftPanelTitle" class="c-panel-title"></div>
-                            <div id="libraryView" class="l-side-panel__content is-hidden"></div>
+                            <div id="libraryView" class="l-side-panel__content is-hidden">
+    
+                            <div id="docList" class="documents-list-container">
+                                </div>
+
+                            </div>
+
                             <div id="lexiconView" class="l-side-panel__content is-hidden">
+
                                   <div class="c-lexicon-table-wrapper">
                                         <table class="c-lexicon-table">
                                                 <tbody id="lexTableBody"></tbody>
                                         </table>
                                   </div>
+
                             </div>
                       </aside>
 
@@ -143,7 +158,7 @@
                                           
 
                                             <button id="toggleRightPanelBtn" class="c-panel-toggle-btn" title="" data-i18n-key="tooltip_hide_right_panel" data-i18n-target="title">
-                                                  <img src="../assets/images/Flecha Izquierda2.svg" alt="Ocultar/Mostrar">
+                                                  <img src="../assets/images/Flecha Derecha2.svg" alt="Ocultar/Mostrar">
                                             </button>
 
                                           <hr class="u-separator--vertical" />
@@ -181,31 +196,31 @@
                                       
                                 <div class="c-side-toolbar c-right-panel-toolbar" id="rightPanelToolbarTwo" style="padding: 0 5px; min-height: 48px;">
                                         <button class="c-side-toolbar__btn" title="Nuevo Icono 1">
-                                              <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 1" class="icon-initial">
+                                              <img src="../assets/images/nube-descargar-altInactivo.svg" alt="Nuevo Icono 1" class="icon-initial">
                                         </button>
 
                                         <hr class="u-separator--vertical" />
 
                                         <button class="c-side-toolbar__btn" title="Nuevo Icono 2">
-                                                <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 2" class="icon-initial">
+                                                <img src="../assets/images/mando-de-juegosInactivo.svg" alt="Nuevo Icono 2" class="icon-initial">
                                         </button>
 
                                         <hr class="u-separator--vertical" />
 
                                         <button class="c-side-toolbar__btn" title="Nuevo Icono 3">
-                                                <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 3" class="icon-initial">
+                                                <img src="../assets/images/cubo-de-pinturaInactivo.svg" alt="Nuevo Icono 3" class="icon-initial">
                                         </button>
 
                                         <hr class="u-separator--vertical" />
 
                                         <button class="c-side-toolbar__btn" title="Nuevo Icono 4">
-                                                <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 4" class="icon-initial">
+                                                <img src="../assets/images/banderaInactiva.svg" alt="Nuevo Icono 4" class="icon-initial">
                                         </button>
 
                                         <hr class="u-separator--vertical" />
 
                                         <button class="c-side-toolbar__btn" title="Nuevo Icono 5">
-                                                <img src="../assets/images/PaletaInicial.svg" alt="Nuevo Icono 5" class="icon-initial">
+                                                <img src="../assets/images/auricularesInactivos.svg" alt="Nuevo Icono 5" class="icon-initial">
                                         </button>
                                 </div>
 
@@ -216,82 +231,91 @@
                         </aside>
                 </main>
 
+
                 <div id="bubble" class="c-word-bubble"></div>
                 <div id="toast" class="c-toast" data-i18n-key="toast_ready">Listo</div>
                 <div id="uploaderOverlay" class="c-uploader-overlay uploader--hidden" aria-hidden="true" role="dialog" aria-modal="true">
-  <div class="c-uploader-content">
-    <header class="c-uploader-header">
-      <div class="c-uploader-brand">
-        <div class="c-uploader-logo">λ</div>
-        <span>LEXICON AI</span>
-      </div>
-      </header>
-<div id="uploaderBody" class="c-uploader-body">
-    <div class="uploader__main-view">
-        <div class="c-uploader-dropzone">
-            <h2 class="c-uploader-title">Subir fuentes</h2>
-            <p class="c-uploader-prompt">Arrastra y suelta o <a class="c-uploader-link">selecciona un archivo</a> para subirlo</p>
-            <p class="c-uploader-file-types">Tipos de archivo admitidos: Pdf, Docx, Txt, Mp3, Mp4, Video Youtube</p>
-        </div>
-        <div class="c-uploader-source-options">
-            <div class="c-uploader-source-column">
-                <h3 class="c-uploader-source-title">Documentos</h3>
-                <div class="c-uploader-source-buttons">
-                    <button class="c-btn c-btn--ghost c-uploader-button">
-                        <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></span>
-                        Documentos compartidos
-                    </button>
-                    <button class="c-btn c-btn--ghost c-uploader-button">
-                        <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></span>
-                        Abrir un archivo local
-                    </button>
-                </div>
-            </div>
-            <div class="c-uploader-source-column">
-                <h3 class="c-uploader-source-title">Archivos multimedia</h3>
-                <div class="c-uploader-source-buttons">
-                    <button class="c-btn c-btn--ghost c-uploader-button">
-                        <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></span>
-                        YouTube
-                    </button>
-                    <button class="c-btn c-btn--ghost c-uploader-button">
-                        <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></span>
-                        Audio o video Local
-                    </button>
-                </div>
-            </div>
-            <div class="c-uploader-source-column">
-                <h3 class="c-uploader-source-title">Pegar</h3>
-                <div class="c-uploader-source-buttons">
-                    <button id="switchToPasteViewButton" class="c-btn c-btn--ghost c-uploader-button">
-                        <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg></span>
-                        Pegar texto
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+                
 
-    <div class="uploader__paste-view">
-        <div class="paste-view__header">
-            <button id="switchToMainViewButton" class="c-btn c-btn--ghost c-btn--small">
-                <span class="c-uploader-button__icon" style="margin-right: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                </span>
-                Volver
-            </button>
-            <h3 class="c-uploader-source-title" style="margin-bottom: 0;">Pegar Texto</h3>
-        </div>
+                <div class="c-uploader-content">
+                        <header class="c-uploader-header">
+                                <div class="c-uploader-brand">
+                                        <div class="c-uploader-logo">λ</div>
+                                        <span>LEXICON AI</span>
+                                </div>
+                        </header>
+                        <div id="uploaderBody" class="c-uploader-body">
+                                <div class="uploader__main-view">
+                                        <div class="c-uploader-dropzone">
+                                                <h2 class="c-uploader-title">Subir fuentes</h2>
+                                                <p class="c-uploader-prompt">Arrastra y suelta o <a class="c-uploader-link">selecciona un archivo</a> para subirlo</p>
+                                                <p class="c-uploader-file-types">Tipos de archivo admitidos: Pdf, Docx, Txt, Mp3, Mp4, Video Youtube</p>
+                                        </div>
+                                        <div class="c-uploader-source-options">
+                                                <div class="c-uploader-source-column">
+                                                        <h3 class="c-uploader-source-title">Documentos</h3>
+                                                        <div class="c-uploader-source-buttons">
+                                                                <button class="c-btn c-btn--ghost c-uploader-button">
+                                                                        <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></span>
+                                                                    Documentos compartidos
+                                                                </button>
+                                                                <button class="c-btn c-btn--ghost c-uploader-button">
+                                                                        <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></span>
+                                                                        Abrir un archivo local
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                                <div class="c-uploader-source-column">
+                                                        <h3 class="c-uploader-source-title">Archivos multimedia</h3>
+                                                        <div class="c-uploader-source-buttons">
+                                                                <button class="c-btn c-btn--ghost c-uploader-button">
+                                                                        <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></span>
+                                                                        YouTube
+                                                                </button>
+                                                                <button class="c-btn c-btn--ghost c-uploader-button">
+                                                                    <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></span>
+                                                                        Audio o video Local
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                                <div class="c-uploader-source-column">
+                                                    <h3 class="c-uploader-source-title">Pegar</h3>
+                                                    <div class="c-uploader-source-buttons">
+                                                        <button id="switchToPasteViewButton" class="c-btn c-btn--ghost c-uploader-button">
+                                                            <span class="c-uploader-button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg></span>
+                                                            Pegar texto
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
 
-        <div class="paste-textarea__container">
-            <textarea id="pasteTextArea" class="paste-textarea" placeholder="Pega aquí el contenido..."></textarea>
-            <button id="sendPastedTextButton" class="c-btn button--send-icon" title="Añadir Texto">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-            </button>
-        </div>
-    </div>
-</div>
+                                <div class="uploader__paste-view">
+                                        <div class="paste-view__header">
+                                                <button id="switchToMainViewButton" class="c-btn c-btn--ghost c-btn--small">
+                                                        <span class="c-uploader-button__icon" style="margin-right: 8px;">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                                                        </span>
+                                                        Volver
+                                                </button>
+                                                <h3 class="c-uploader-source-title" style="margin-bottom: 0;">Pegar Texto</h3>
+                                        </div>
+
+                                        <div class="paste-textarea__container">
+                                                <textarea id="pasteTextArea" class="paste-textarea" placeholder="Pega aquí el contenido..."></textarea>
+                                                <button id="sendPastedTextButton" class="c-btn button--send-icon" title="Añadir Texto">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                                </button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
 
                 <script src="../src/core/app.initializer.js"></script>
         </body>
+        <audio id="ambientMusicPlayer" loop>
+                <source src="../assets/audio/Musica.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            </body>
 </html>

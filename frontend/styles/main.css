@@ -31,7 +31,7 @@
 @import url('./6-components/_language-selector.css'); /* <--- NUEVA LÍNEA AÑADIDA */
 /* En styles/main.css, dentro de la sección de componentes */
 @import url('./6-components/_uploader-panel.css');
-@import url('./6-components/fix-tooltips.css'); /* <--- NUEVA LÍNEA AÑADIDA */
+
 
 /* 7. Utilities: Clases de ayuda para sobreescribir estilos (ej. .u-mb-8). */
 @import url('./7-utilities/_utilities.css');

@@ -26,12 +26,34 @@ const UploaderPanelComponent = (function () {
     if (pasteTextArea) pasteTextArea.focus();
   };
 
+  
+  /**
+   * @private
+   * Se ejecuta cuando el usuario hace clic en el botón de enviar texto.
+   * Pasa el texto al gestor de estado y cierra el panel.
+   */
   const sendPastedText = () => {
-    if (pasteTextArea && pasteTextArea.value.trim() !== '') {
-      console.log('Texto a subir:', pasteTextArea.value);
+    try {
+      // Asegurarse de que el textarea y su valor existen
+      if (!pasteTextArea || pasteTextArea.value.trim() === '') {
+        // En lugar de un alert, podríamos usar un ToastHandler en el futuro
+        alert('Por favor, introduce algún texto para subir.');
+        return;
+      }
+      
+      const textToProcess = pasteTextArea.value;
+      
+      // Llama a la nueva función en el gestor de estado
+      DocumentsState.addAndSelectPastedText(textToProcess);
+      
+      // Cierra el panel de carga
       setUploaderVisibility(false);
+
+    } catch (error) {
+      console.error('UploaderPanel: Error al enviar el texto pegado.', error);
     }
   };
+
 
   const handleEscapeKey = (event) => {
     if (event.key === 'Escape' && !uploaderOverlay.classList.contains('uploader--hidden')) {

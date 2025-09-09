@@ -112,6 +112,36 @@ const MainMenuComponent = (function () {
     }
   }
 
+  /**
+   * @private
+   * Maneja la reproducción o pausa de la música ambiental al hacer clic en el botón.
+   * También gestiona el estado visual del botón (activo/inactivo).
+   */
+  function handleMusicPlayerButtonClick() {
+    const musicPlayer = document.getElementById('ambientMusicPlayer');
+    const musicButton = document.getElementById('btnMusicPlayer');
+
+    // Verificación de seguridad para evitar errores si los elementos no existen.
+    if (!musicPlayer || !musicButton) {
+      console.warn('MainMenuComponent: No se encontró el reproductor de música o su botón.');
+      return;
+    }
+
+    try {
+      if (musicPlayer.paused) {
+        musicPlayer.play();
+        musicButton.classList.add('is-active');
+        musicButton.title = "Pausar música";
+      } else {
+        musicPlayer.pause();
+        musicButton.classList.remove('is-active');
+        musicButton.title = "Reproducir música";
+      }
+    } catch (error) {
+      console.error('Error al intentar controlar el reproductor de música.', error);
+    }
+  }
+
   return {
     initialize,
   };

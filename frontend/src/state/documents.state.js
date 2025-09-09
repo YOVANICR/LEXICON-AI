@@ -43,9 +43,15 @@ const DocumentsState = (function () {
    */
   function addDocument(document_title, document_text_content) {
     const timestamp_now = Date.now();
+    
+    // ✨ CORREGIDO: Nos aseguramos de que el título sea una cadena y tenga un valor por defecto.
+    const final_title = (typeof document_title === 'string' && document_title.trim() !== '') 
+      ? document_title.trim() 
+      : `Texto ${timestamp_now}`;
+
     const new_document_object = {
       id: `doc_${timestamp_now}`,
-      title: document_title.trim() || `Documento sin título ${timestamp_now}`,
+      title: final_title, // Usamos la variable corregida
       text: document_text_content,
       createdAt: timestamp_now,
       lastAccessed: timestamp_now,
@@ -60,6 +66,33 @@ const DocumentsState = (function () {
     return new_document_object;
   }
 
+  /**
+   * Crea un nuevo documento a partir de un texto pegado y lo establece como activo.
+   * Esta función actúa como un orquestador entre la creación y la selección.
+   * @param {string} pastedTextContent - El contenido de texto plano que el usuario pegó.
+   * @returns {void}
+   */
+  function addAndSelectPastedText(pastedTextContent) {
+    try {
+      // Validación para asegurar que el texto no esté vacío.
+      if (!pastedTextContent || typeof pastedTextContent !== 'string' || pastedTextContent.trim() === '') {
+        throw new Error('El contenido del texto pegado no puede estar vacío.');
+      }
+
+      // 1. Reutiliza la función existente para crear el objeto del documento.
+      const newDocument = addDocument('Texto Pegado', pastedTextContent);
+      
+      // 2. Establece este nuevo documento como el activo.
+      // Esto publicará automáticamente el evento 'documents:documentSelected'
+      // que el ReaderComponent está esperando.
+      setCurrentActiveDocumentById(newDocument.id);
+
+    } catch (error) {
+      console.error('DocumentsState: Error al procesar y seleccionar el texto pegado.', error);
+      // En un futuro, podríamos notificar al usuario con un toast de error.
+      // ToastHandler.showToast('Error al procesar el texto.');
+    }
+  }
   /**
    * Elimina un documento de la lista por su ID.
    * @param {string} document_id_to_delete - El ID del documento a eliminar.
@@ -77,7 +110,7 @@ const DocumentsState = (function () {
     return [...documents_list];
   }
 
-  /**
+   /**
    * Establece el documento activo actual y notifica a la aplicación.
    * @param {string} document_id - El ID del documento que se ha seleccionado.
    */
@@ -86,10 +119,37 @@ const DocumentsState = (function () {
 
     if (selected_document) {
       current_active_document_id = document_id;
+      // Actualizamos la fecha de último acceso al seleccionar el documento
+      selected_document.lastAccessed = Date.now();
       localStorage.setItem('currentActiveDocId', document_id);
       
-      // Notifica a los componentes interesados (como el Lector) qué documento se ha seleccionado.
-      EventBus.publish('documents:documentSelected', { document: selected_document });
+      // Notifica al Lector qué documento específico se ha seleccionado.
+      EventBus.publish('documents:documentSelected', { 
+          document: selected_document 
+      });
+
+      // ✨ CORRECCIÓN CLAVE: Notifica a la Biblioteca y le envía
+      // la lista COMPLETA y el ID del documento ACTIVO.
+      EventBus.publish('documents:listChanged', {
+        documents: documents_list,
+        activeDocumentId: current_active_document_id
+      });
+    }
+  }
+
+  function togglePinState(document_id) {
+    const document_to_toggle = documents_list.find(doc => doc.id === document_id);
+    if (document_to_toggle) {
+      document_to_toggle.isPinned = !document_to_toggle.isPinned;
+      
+      // Reordena la lista para poner los anclados primero
+      documents_list.sort((a, b) => b.isPinned - a.isPinned);
+
+      // Notifica a la UI que la lista ha cambiado para que se re-renderice
+      EventBus.publish('documents:listChanged', { 
+        documents: documents_list,
+        activeDocumentId: current_active_document_id 
+      });
     }
   }
 
@@ -99,6 +159,8 @@ const DocumentsState = (function () {
     addDocument,
     deleteDocumentById,
     getAllDocuments,
-    setCurrentActiveDocumentById // <- Esta función faltaba en el return
+    setCurrentActiveDocumentById, // <- Esta función faltaba en el return
+    addAndSelectPastedText,
+    togglePinState
   };
 })();

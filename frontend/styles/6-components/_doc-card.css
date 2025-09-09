@@ -1,54 +1,167 @@
 /*
   Archivo: frontend/styles/6-components/_doc-card.css
-  Propósito: Estilos para el componente de tarjeta de documento (c-doc-card)
-             que se muestra en la lista de la biblioteca.
+  Propósito: Define los estilos para el componente de tarjeta de documento,
+             incluyendo la animación de volteo 3D y los botones de icono.
 */
 
-.c-doc-card {
-  position: relative; 
-  border: 1px solid var(--line);
-  border-left: 3px solid transparent; 
-  border-radius: 10px;
-  padding: 10px;
-  display: grid;
-  gap: 6px;
-  background: var(--card);
-  transition: transform 0.8s ease-in-out, border-color 0.2s ease;
+/* ----------------------------------------- */
+/* Estructura para el volteo 3D              */
+/* ----------------------------------------- */
+.c-document-card {
+  background-color: transparent;
+  perspective: 1000px;
+  border: none;
+  min-height: 90px; /* ✨ CORRECCIÓN: Le damos una altura mínima a la tarjeta */
 }
 
-.c-doc-card--is-active {
+.c-document-card__flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.c-document-card__flipper--is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* ----------------------------------------- */
+/* Caras frontal y trasera (REGLA UNIFICADA) */
+/* ----------------------------------------- */
+.c-document-card__front,
+.c-document-card__back {
+  /* ✨ CORRECCIÓN CLAVE: Ambas caras son absolutas para apilarse */
+  position: absolute; 
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  
+  /* Estilos comunes de las caras */
+  padding: 10px;
+  background-color: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+/* Estilos específicos de la cara FRONTAL */
+.c-document-card__front {
+  display: grid;
+  grid-template-rows: auto 1fr; /* Fila para el título, fila para las acciones */
+  gap: 6px;
+  border-left: 3px solid transparent;
+}
+
+/* Modificador para la tarjeta activa */
+.c-document-card--is-active .c-document-card__front {
   border-left-color: var(--blue);
 }
 
-.c-doc-card__title {
-  font-weight: 700;
-  padding-right: 25px; 
+/* Estilos específicos de la cara TRASERA */
+.c-document-card__back {
+  transform: rotateY(180deg); /* La cara trasera empieza girada */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Centramos el contenido */
+  text-align: center;
 }
 
-.c-doc-card__meta {
+
+/* ----------------------------------------- */
+/* Elementos del Componente                  */
+/* ----------------------------------------- */
+.c-document-card__title {
+  font-weight: 700;
+  padding-right: 25px;
+  color: var(--ink);
+}
+
+.c-document-card__metadata {
   font-size: 12px;
   color: var(--muted);
 }
 
-.c-doc-card__actions {
+.c-document-card__actions-container {
   display: flex;
-  align-items: center; 
+  align-items: center;
   gap: 8px;
 }
 
-.c-doc-card__pin-btn {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  opacity: 0.4;
+/* Botones de acción con icono */
+
+.c-document-card__actions-container {
+  display: flex;
+  align-items: center; /* Centra los botones verticalmente */
+  gap: 8px;
 }
 
-.c-doc-card__indicator {
-  margin-left: auto; 
-  font-size: 14px;
-  color: var(--blue);
+.c-document-card__action-button {
+  background-color: transparent;
+  border: none; /* Eliminamos el borde */
+  border-radius: 8px;
+  padding: 4px; /* Reducimos el padding para dar más espacio al icono */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  /* Hacemos el botón un poco más grande para un área de clic cómoda */
+  width: 32px;
+  height: 32px;
+}
+.c-document-card__action-button:hover {
+  background-color: var(--line);
+}
+
+.c-document-card__action-button-icon {
+  width: 100%; /* El icono ocupa todo el ancho del botón */
+  height: 100%; /* El icono ocupa toda la altura del botón */
+}
+
+/* Botón de anclar (sin cambios) */
+.c-document-card__pin-button {
+  position: absolute; top: 6px; right: 6px; padding: 4px;
+  background-color: transparent; border: none; border-radius: 4px;
+  cursor: pointer; opacity: 0.4;
+  transition: all 0.2s ease;
+}
+.c-document-card__pin-button:hover { opacity: 1; transform: scale(1.1); background-color: var(--line); }
+.c-document-card__pin-button--is-pinned { opacity: 1; }
+.c-document-card__pin-button-icon { width: 16px; height: 16px; display: block; pointer-events: none; }
+
+/* Icono indicador de estado (Viendo) */
+.c-document-card__status-indicator-icon { margin-left: auto; width: 20px; height: 20px; }
+
+.documents-list-container {
+  display: flex; /* Activa el layout flexible */
+  flex-direction: column; /* Apila las tarjetas verticalmente */
+  gap: 12px; /* Añade un espacio de 12px entre cada tarjeta */
+  overflow-y: auto; /* Añade una barra de scroll si las tarjetas exceden el espacio */
+  height: 100%; /* Asegura que ocupe el espacio vertical disponible */
+}
+
+/* ==========================================================================
+   Modo Oscuro para Tarjetas de Documento
+   ========================================================================== */
+body.dark .c-document-card__front,
+body.dark .c-document-card__back {
+  /* No es necesario cambiar el fondo si ya usas var(--card) y var(--line) */
+  /* pero nos aseguramos que los colores de texto se inviertan */
+  color: var(--ink); /* var(--ink) es claro en modo oscuro */
+}
+
+/* Título, metadatos y botones en modo oscuro */
+body.dark .c-document-card__title,
+body.dark .c-document-card__metadata {
+  color: var(--ink); /* Hereda el color principal de texto */
+}
+
+/* ✨ CORRECCIÓN CLAVE: Iconos de botones en modo oscuro */
+body.dark .c-document-card__action-button-icon,
+body.dark .c-document-card__pin-button-icon,
+body.dark .c-document-card__status-indicator-icon {
+  /* La propiedad 'filter: invert(1)' es una forma rápida y efectiva
+     de hacer que los iconos negros se vuelvan blancos. */
+  filter: invert(1);
 }
